@@ -1,0 +1,1520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#c8102e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Workshop Accounts</title>
+<style>
+:root{--red:#c8102e;--red2:#a30d25;--ink:#1d2129;--ink2:#4a5160;--mut:#7b8290;--line:#e3e6eb;--bg:#f4f5f7;--card:#fff;--ok:#127a3e;--okb:#e5f4eb;--warn:#9a5b00;--warnb:#fff3dc;--bad:#b42318;--badb:#fde8e6;--info:#1d4ed8;--infob:#e6eefc;--r:10px}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+.hidden{display:none!important}
+.top{background:var(--ink);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:20}
+.top .brand{font-weight:700;letter-spacing:.2px;display:flex;align-items:center;gap:8px}
+.top .brand i{display:inline-block;width:10px;height:22px;background:var(--red);border-radius:2px}
+.top .sp{flex:1}
+.top .rng{display:flex;gap:6px;align-items:center;font-size:12px}
+.top .rng input{background:#2c313b;border:1px solid #3c424e;color:#fff;border-radius:6px;padding:4px 6px;font-size:12px;color-scheme:dark}
+.top .who{font-size:12px;background:#2c313b;border-radius:20px;padding:4px 10px}
+.top button.ghost{background:transparent;border:1px solid #4b5260;color:#fff;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px}
+.demo{background:#fff3dc;color:#7a4a00;text-align:center;font-size:12px;padding:4px}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;background:#fff;border-bottom:1px solid var(--line);padding:0 10px;position:sticky;top:48px;z-index:19}
+nav.tabs button{border:0;background:none;padding:12px 14px;cursor:pointer;color:var(--ink2);border-bottom:3px solid transparent;white-space:nowrap;font-weight:500}
+nav.tabs button.on{color:var(--red);border-bottom-color:var(--red)}
+main{padding:16px;max-width:1280px;margin:0 auto}
+h2{font-size:18px;margin:4px 0 12px}
+h3{font-size:16px;margin:0 0 12px}
+h4{font-size:13px;margin:16px 0 8px;color:var(--ink2);text-transform:uppercase;letter-spacing:.4px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.kpi .l{font-size:12px;color:var(--mut)}
+.kpi .v{font-size:22px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:12px;color:var(--ink2);margin-top:2px}
+.kpi.red .v{color:var(--bad)} .kpi.green .v{color:var(--ok)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;white-space:nowrap}
+.btn:hover{border-color:#c5cad3}
+.btn.p{background:var(--red);border-color:var(--red);color:#fff}.btn.p:hover{background:var(--red2)}
+.btn.d{color:var(--bad);border-color:#f0c4bf}
+.btn.s{padding:4px 10px;font-size:12px;font-weight:600}
+.btn:disabled{opacity:.5;cursor:default}
+.tw{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;vertical-align:top}
+th{background:#f8f9fb;font-weight:600;color:var(--ink2);font-size:12px;position:sticky;top:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.click{cursor:pointer} tr.click:hover td{background:#fafbfc}
+tr.rev td{color:var(--mut);text-decoration:line-through}
+tr.sub td{background:#f8f9fb;font-weight:600}
+tfoot td{font-weight:700;background:#f8f9fb}
+.b{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px}
+.b.ok{background:var(--okb);color:var(--ok)}.b.warn{background:var(--warnb);color:var(--warn)}.b.bad{background:var(--badb);color:var(--bad)}.b.info{background:var(--infob);color:var(--info)}.b.g{background:#eceef1;color:var(--ink2)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filters input,.filters select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.filters input[type=search]{min-width:220px;flex:1}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:4px 12px;cursor:pointer;font-size:12px}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.modal{position:fixed;inset:0;background:rgba(15,18,24,.55);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:30px 12px;overflow-y:auto}
+.mbox{background:#fff;border-radius:14px;width:100%;max-width:760px;padding:20px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.mbox .x{position:absolute;right:12px;top:10px;border:0;background:none;font-size:22px;cursor:pointer;color:var(--mut)}
+.fg{display:grid;gap:10px 12px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.f label{display:block;font-size:12px;color:var(--ink2);margin-bottom:3px;font-weight:600}
+.f input,.f select,.f textarea{width:100%;padding:9px 10px;border:1px solid #d5d9e0;border-radius:8px;background:#fff}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid #f3b6c0;border-color:var(--red)}
+.f.wide{grid-column:1/-1}
+.req::after{content:" *";color:var(--red)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.seg label{padding:8px 14px;cursor:pointer;border-right:1px solid var(--line);font-weight:600}
+.seg label:last-child{border-right:0}
+.seg input{display:none}
+.seg input:checked+span{color:var(--red)}
+.seg label:has(input:checked){background:#fdecef}
+.err{background:var(--badb);color:var(--bad);border-radius:8px;padding:8px 12px;margin:10px 0;font-weight:600}
+.note{background:var(--infob);color:#1e3a8a;border-radius:8px;padding:8px 12px;margin:10px 0;font-size:13px}
+.foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;flex-wrap:wrap}
+.dues{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0}
+.dues .card{padding:10px 12px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;font-size:13px}
+.kv span:nth-child(odd){color:var(--mut)}
+.lines .ln{display:grid;grid-template-columns:150px 120px 1fr 1fr 34px;gap:6px;margin-bottom:6px;align-items:center}
+.lines .ln select,.lines .ln input{padding:8px;border:1px solid #d5d9e0;border-radius:8px;width:100%;min-width:0}
+.tot{display:flex;justify-content:space-between;background:#f8f9fb;border-radius:8px;padding:10px 12px;margin-top:8px;font-weight:600;flex-wrap:wrap;gap:8px}
+.tot .over{color:var(--bad)}
+.login{max-width:360px;margin:60px auto;text-align:center}
+.login .card{padding:28px}
+.login input{font-size:28px;letter-spacing:12px;text-align:center;width:100%;padding:10px;border:1px solid #d5d9e0;border-radius:10px;margin:14px 0}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;z-index:60;opacity:0;transition:.25s;pointer-events:none;max-width:90vw;font-weight:600}
+#toast.on{opacity:1}#toast.e{background:var(--bad)}
+#busy{position:fixed;top:0;left:0;height:3px;background:var(--red);z-index:70;width:0;transition:width .3s}
+#busy.on{width:80%;transition:width 8s}
+.den{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.den .f input{text-align:right}
+.mut{color:var(--mut)} .sm{font-size:12px} .r{text-align:right} .bold{font-weight:700}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.printhead{display:none}
+@media (max-width:720px){
+  .split{grid-template-columns:1fr}
+  .lines .ln{grid-template-columns:1fr 1fr;}
+  .lines .ln .del{grid-column:2;justify-self:end}
+  main{padding:12px}
+  .grid{grid-template-columns:1fr 1fr;gap:8px}
+  .kpi .v{font-size:18px}
+  .top .rng{width:100%}
+  nav.tabs{position:relative;top:auto}
+  .top{position:relative}
+}
+@media print{
+  .top,nav.tabs,.noprint,.filters,.chips,.demo,.btn{display:none!important}
+  body,main{background:#fff;padding:0}
+  .tw{border:0;overflow:visible} th{position:static}
+  .printhead{display:block;margin-bottom:10px}
+  td,th{padding:4px 6px;font-size:11px}
+}
+</style>
+</head>
+<body>
+<div id="busy"></div>
+<div id="app"></div>
+<div id="modal" class="modal hidden"><div class="mbox"><button class="x" onclick="closeModal()" aria-label="Close">×</button><div id="mbody"></div></div></div>
+<div id="toast"></div>
+
+<script>
+/* ======================================================================
+   PLANET TOYOTA · WORKSHOP ACCOUNTS — CORE ENGINE  (v1.0)
+   Shared by the Apps Script backend and the browser demo.
+   Pure logic only. Storage is reached through a `db` adapter:
+     db.rows(table) -> [{...row, _r:rowNumber}]
+     db.append(table, obj)   db.update(table, _r, partialObj)   db.withLock(fn)
+   ====================================================================== */
+var WA = (function () {
+  'use strict';
+
+  var SCHEMA = {
+    Users:    ['UserID','Name','Role','PIN','Active'],
+    Settings: ['Key','Value','Note'],
+    Masters:  ['List','Value','Active','Parent'],
+    Bills:    ['BillID','BillNo','BillDate','Type','JobCardNo','RegNo','Customer','Mobile','Advisor','BillAmount','Scheme','Insurer','ClaimNo','CustShare','InsShare','CreditAllowed','CreditBy','CreditDue','CreditNote','Remarks','Status','CancelReason','EnteredBy','EnteredAt','UpdatedBy','UpdatedAt','TallyVch','TallyBy'],
+    Receipts: ['LineID','RcptNo','RcptDate','BillID','BillNo','BillType','Party','Payer','Mode','Account','Amount','RefNo','AdvanceID','Remarks','Status','EnteredBy','EnteredAt','RevReason','RevBy','RevAt','ReconStatus','ReconDate','ReconBy','TallyVch','TallyBy'],
+    Advances: ['AdvID','AdvDate','Party','Mobile','RegNo','Purpose','Amount','Mode','Account','RefNo','Remarks','Status','EnteredBy','EnteredAt','RevReason','RevBy','RevAt','ReconStatus','ReconDate','ReconBy','TallyVch','TallyBy'],
+    Payments: ['PayID','PayDate','ExpGroup','Category','Payee','Narration','Amount','Mode','Account','RefNo','SupplierBillNo','HasBill','LinkID','ApprovedBy','Remarks','Status','EnteredBy','EnteredAt','RevReason','RevBy','RevAt','ReconStatus','ReconDate','ReconBy','TallyVch','TallyBy'],
+    Contra:   ['ContraID','CDate','CType','Amount','Account','RefNo','Remarks','Status','EnteredBy','EnteredAt','RevReason','RevBy','RevAt','ReconStatus','ReconDate','ReconBy','TallyVch','TallyBy'],
+    DayClose: ['CloseDate','Opening','CashIn','CashOut','Expected','Counted','Denoms','Diff','Remarks','Status','ClosedBy','ClosedAt','VerifiedBy','VerifiedAt','ReopenedBy','ReopenedAt'],
+    Log:      ['TS','User','Role','Action','Ref','ClientRef','Details']
+  };
+
+  var TMETA = {
+    Bills:    { id:'BillID',   date:'BillDate' },
+    Receipts: { id:'LineID',   date:'RcptDate' },
+    Advances: { id:'AdvID',    date:'AdvDate'  },
+    Payments: { id:'PayID',    date:'PayDate'  },
+    Contra:   { id:'ContraID', date:'CDate'    }
+  };
+
+  var MONEY = ['CASH','UPI','NEFT','CARD','CHEQUE'];
+  var BANK  = ['UPI','NEFT','CARD','CHEQUE'];
+  var CONTRA = { CASH_TO_BANK:-1, CASH_TO_HO:-1, BANK_TO_CASH:1, CASH_FROM_HO:1 };
+  var CONTRA_LBL = { CASH_TO_BANK:'Cash deposited in bank', CASH_TO_HO:'Cash sent to main showroom/HO', BANK_TO_CASH:'Cash withdrawn from bank', CASH_FROM_HO:'Cash received from main showroom/HO' };
+  var REFUND_CAT = 'Advance Refund';
+
+  var ALL  = ['CASHIER','ADVISOR','ACCOUNTS','OWNER'];
+  var CASH = ['CASHIER','ACCOUNTS','OWNER'];
+  var ACC  = ['ACCOUNTS','OWNER'];
+  var OWN  = ['OWNER'];
+  var PERM = {
+    'bill.create':ALL, 'bill.edit':ACC, 'bill.cancel':ACC, 'bill.credit':CASH,
+    'receipt.create':CASH, 'writeoff':ACC,
+    'advance.create':CASH, 'payment.create':CASH, 'contra.create':CASH,
+    'day.close':CASH, 'day.verify':ACC, 'reverse':ACC, 'recon':ACC, 'tally':ACC,
+    'backdate':ACC, 'bigcash':ACC, 'admin':OWN
+  };
+
+  var DEFAULTS = {
+    settings: [
+      ['WORKSHOP_NAME','Planet Toyota · Workshop','Shown on reports'],
+      ['OPENING_DATE','','Cash book start date (yyyy-mm-dd). No entries allowed before this.'],
+      ['OPENING_CASH','0','Physical cash in hand at the start of OPENING_DATE'],
+      ['CASH_EXP_LIMIT','10000','Cash expense above this needs Accounts/Owner (Sec 40A(3))'],
+      ['EXP_APPROVAL_LIMIT','2000','Expense above this needs an "Approved by" name'],
+      ['CASH_RECEIPT_LIMIT','199999','Max cash against one bill (Sec 269ST: below ₹2,00,000)'],
+      ['TDS_MAX_PCT','10','Sanity cap: TDS cannot exceed this % of insurance share']
+    ],
+    masters: {
+      ACCOUNT: ['Workshop Bank A/c (rename)','Workshop UPI QR (rename)','Card POS Machine (rename)'],
+      INSURER: ['New India Assurance','United India Insurance','National Insurance','The Oriental Insurance','ICICI Lombard','HDFC ERGO','Bajaj Allianz','Tata AIG','IFFCO Tokio','SBI General','Reliance General','Royal Sundaram','Cholamandalam MS','Future Generali','Universal Sompo','Liberty General','Go Digit','Kotak General','Shriram General','Magma HDI','Acko'],
+      EXP_GROUP: [],
+      EXP_CAT: [],   /* filled from EXP_HEADS below as [ledger, group] pairs */
+      ADV_PURPOSE: ['Repair advance','Bodyshop advance (claim pending)','Parts order advance','Accessories','Extended warranty / AMC','Other'],
+      ADVISOR: []
+    }
+  };
+  /* Account group (header) -> expense ledgers. Rename in Settings to match Tally exactly. */
+  var EXP_HEADS = {
+    'Workshop Direct Expenses': ['Consumables (local purchase)','Outside Job / Sublet Work','Towing Charges','Pick-up & Drop','Freight & Cartage'],
+    'Staff Welfare Expenses':   ['Tea & Refreshment','Staff Welfare','Staff Conveyance','Uniform & Safety'],
+    'Repairs & Maintenance':    ['Building Repairs','Tools & Equipment Repairs','Computer & Printer Repairs','Electrical Repairs'],
+    'Vehicle Running Expenses': ['Fuel – Workshop Vehicles','Vehicle Repairs','Toll & Parking'],
+    'Office & Administrative':  ['Printing & Stationery','Telephone & Internet','Courier & Postage','Electricity & Water','Cleaning & Housekeeping','Rent'],
+    'Miscellaneous Expenses':   ['Miscellaneous','Puja & Festival']
+  };
+  Object.keys(EXP_HEADS).forEach(function (g) { DEFAULTS.masters.EXP_GROUP.push(g); EXP_HEADS[g].forEach(function (l) { DEFAULTS.masters.EXP_CAT.push([l, g]); }); });
+  var REFUND_GROUP = 'Customer Advances';
+
+  /* ---------------- helpers ---------------- */
+  function s(v) { return v === undefined || v === null ? '' : String(v).trim(); }
+  function num(v) { var t = s(v).replace(/,/g, ''); if (t === '') return NaN; var n = Number(t); return isFinite(n) ? n : NaN; }
+  function n0(v) { var n = num(v); return isNaN(n) ? 0 : n; }
+  function r2(n) { return Math.round((Number(n) || 0) * 100) / 100; }
+  function inr(n) { var x = r2(n), neg = x < 0; x = Math.abs(x); var p = x.toFixed(2).split('.'), i = p[0], last = i.slice(-3), rest = i.slice(0, -3); if (rest) last = ',' + last; rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ','); return (neg ? '-' : '') + rest + last + (p[1] === '00' ? '' : '.' + p[1]); }
+  function fail(msg, code) { var e = new Error(msg); e.userError = true; e.code = code || ''; throw e; }
+  function ymd(v) { v = s(v).slice(0, 10); return /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : ''; }
+  function addDays(d, k) { var t = Date.UTC(+d.slice(0,4), +d.slice(5,7)-1, +d.slice(8,10)) + k*86400000; return new Date(t).toISOString().slice(0,10); }
+  function clean(o) { var r = {}; for (var k in o) if (k !== '_r') r[k] = o[k]; return r; }
+  function up(v) { return s(v).toUpperCase(); }
+  function can(me, p) { return (PERM[p] || []).indexOf(me.role) >= 0; }
+  function need(me, p) { if (!can(me, p)) fail('Your role (' + me.role + ') is not allowed to do this.'); }
+
+  function setting(db, k, def) { var r = db.rows('Settings').filter(function (x) { return s(x.Key) === k; })[0]; return r && s(r.Value) !== '' ? s(r.Value) : def; }
+  function settingNum(db, k, def) { var v = num(setting(db, k, '')); return isNaN(v) ? def : v; }
+  function masters(db, list) { return db.rows('Masters').filter(function (x) { return s(x.List) === list && up(x.Active) !== 'N'; }).map(function (x) { return s(x.Value); }); }
+  function expMap(db) {
+    var m = {};
+    masters(db, 'EXP_GROUP').forEach(function (g) { m[g] = []; });
+    db.rows('Masters').forEach(function (x) { if (s(x.List) === 'EXP_CAT' && up(x.Active) !== 'N' && m[s(x.Parent)]) m[s(x.Parent)].push(s(x.Value)); });
+    return m;
+  }
+
+  function nextId(db, table, field, prefix, ctx) {
+    var t = ctx.today(), pre = prefix + '-' + t.slice(2, 4) + t.slice(5, 7) + '-', max = 0;
+    db.rows(table).forEach(function (r) { var v = s(r[field]); if (v.indexOf(pre) === 0) { var n = parseInt(v.slice(pre.length), 10); if (n > max) max = n; } });
+    return pre + ('000' + (max + 1)).slice(-4);
+  }
+
+  function entryDate(db, ctx, me, d) {
+    var t = ctx.today(); d = ymd(d) || t;
+    if (d > t) fail('Future dates are not allowed.');
+    if (d !== t && !can(me, 'backdate')) fail('Only Accounts can post back-dated entries. Use today\'s date.');
+    var od = setting(db, 'OPENING_DATE', '');
+    if (od && d < od) fail('Date is before the cash book start date (' + od + ').');
+    return d;
+  }
+  function dayRec(db, d) { return db.rows('DayClose').filter(function (x) { return ymd(x.CloseDate) === d; })[0]; }
+  function dayOpen(db, d) {
+    var r = dayRec(db, d);
+    if (r && (r.Status === 'CLOSED' || r.Status === 'VERIFIED')) fail('Cash book for ' + d + ' is ' + r.Status.toLowerCase() + '. Ask Accounts to reopen that day first.', 'DAY_CLOSED');
+  }
+
+  /* ---------------- derived figures ---------------- */
+  function billAgg(db) {
+    var a = {};
+    db.rows('Receipts').forEach(function (l) {
+      if (l.Status !== 'ACTIVE') return;
+      var x = a[l.BillID] || (a[l.BillID] = { c:0, i:0, tds:0, wo:0, cash:0 }), amt = r2(n0(l.Amount));
+      if (l.Payer === 'INSURANCE') x.i += amt; else x.c += amt;
+      if (l.Mode === 'TDS') x.tds += amt;
+      if (l.Mode === 'WRITEOFF') x.wo += amt;
+      if (l.Mode === 'CASH') x.cash += amt;
+    });
+    return a;
+  }
+  function enrich(b, a) {
+    a = a || { c:0, i:0, tds:0, wo:0, cash:0 };
+    var o = clean(b);
+    o.BillAmount = r2(n0(b.BillAmount)); o.CustShare = r2(n0(b.CustShare)); o.InsShare = r2(n0(b.InsShare));
+    o.CustPaid = r2(a.c); o.InsPaid = r2(a.i); o.TDS = r2(a.tds); o.WriteOff = r2(a.wo); o.CashRecd = r2(a.cash);
+    o.CustDue = r2(o.CustShare - a.c); o.InsDue = r2(o.InsShare - a.i); o.TotalDue = r2(o.CustDue + o.InsDue);
+    o.PayStatus = b.Status === 'CANCELLED' ? 'CANCELLED' : (o.TotalDue <= 0.009 ? 'PAID' : ((a.c + a.i) > 0 ? 'PARTIAL' : 'UNPAID'));
+    return o;
+  }
+  function findBill(db, id) { var b = db.rows('Bills').filter(function (x) { return x.BillID === s(id); })[0]; if (!b) fail('Bill not found.'); return b; }
+
+  function advAgg(db) {
+    var a = {};
+    function g(id) { return a[id] || (a[id] = { adj:0, ref:0 }); }
+    db.rows('Receipts').forEach(function (l) { if (l.Status === 'ACTIVE' && l.Mode === 'ADV_ADJ' && s(l.AdvanceID)) g(s(l.AdvanceID)).adj += r2(n0(l.Amount)); });
+    db.rows('Payments').forEach(function (p) { if (p.Status === 'ACTIVE' && s(p.LinkID)) g(s(p.LinkID)).ref += r2(n0(p.Amount)); });
+    return a;
+  }
+  function enrichAdv(v, a) {
+    a = a || { adj:0, ref:0 };
+    var o = clean(v); o.Amount = r2(n0(v.Amount));
+    o.Adjusted = r2(a.adj); o.Refunded = r2(a.ref); o.Balance = r2(o.Amount - a.adj - a.ref);
+    o.AdvStatus = v.Status !== 'ACTIVE' ? 'REVERSED' : (o.Balance <= 0.009 ? 'CLOSED' : ((a.adj + a.ref) > 0 ? 'PART' : 'OPEN'));
+    return o;
+  }
+  function advBalance(db, id) {
+    var v = db.rows('Advances').filter(function (x) { return s(x.AdvID) === s(id); })[0];
+    if (!v || v.Status !== 'ACTIVE') fail('Advance ' + id + ' not found or reversed.');
+    return enrichAdv(v, advAgg(db)[s(id)]);
+  }
+
+  function cashMoves(db) {
+    var m = [];
+    db.rows('Receipts').forEach(function (l) { if (l.Status === 'ACTIVE' && l.Mode === 'CASH') m.push({ date:ymd(l.RcptDate), at:s(l.EnteredAt), src:'Receipts', id:l.RcptNo, kind:(l.BillType === 'BS' ? 'Bodyshop bill receipt' : 'General repair receipt'), narr:'Bill ' + l.BillNo + ' · ' + l.Party, amt:r2(n0(l.Amount)) }); });
+    db.rows('Advances').forEach(function (v) { if (v.Status === 'ACTIVE' && v.Mode === 'CASH') m.push({ date:ymd(v.AdvDate), at:s(v.EnteredAt), src:'Advances', id:v.AdvID, kind:'Advance received', narr:v.Party + ' · ' + v.Purpose, amt:r2(n0(v.Amount)) }); });
+    db.rows('Payments').forEach(function (p) { if (p.Status === 'ACTIVE' && p.Mode === 'CASH') m.push({ date:ymd(p.PayDate), at:s(p.EnteredAt), src:'Payments', id:p.PayID, kind:p.Category, narr:p.Payee + (s(p.Narration) ? ' · ' + p.Narration : ''), amt:-r2(n0(p.Amount)) }); });
+    db.rows('Contra').forEach(function (c) { if (c.Status === 'ACTIVE' && CONTRA[c.CType]) m.push({ date:ymd(c.CDate), at:s(c.EnteredAt), src:'Contra', id:c.ContraID, kind:CONTRA_LBL[c.CType], narr:(s(c.Account) ? c.Account + ' · ' : '') + s(c.Remarks), amt:CONTRA[c.CType] * r2(n0(c.Amount)) }); });
+    m.sort(function (x, y) { return x.date < y.date ? -1 : x.date > y.date ? 1 : (x.at < y.at ? -1 : x.at > y.at ? 1 : 0); });
+    return m;
+  }
+  function cashBalance(db, beforeDate, mv) {
+    var od = setting(db, 'OPENING_DATE', ''), b = settingNum(db, 'OPENING_CASH', 0);
+    (mv || cashMoves(db)).forEach(function (x) { if ((!od || x.date >= od) && (!beforeDate || x.date < beforeDate)) b += x.amt; });
+    return r2(b);
+  }
+  function checkCashOut(db, d, amt) {
+    var mv = cashMoves(db), avail = Math.min(cashBalance(db, addDays(d, 1), mv), cashBalance(db, null, mv));
+    if (amt > avail + 0.009) fail('Not enough cash in hand. Available cash: ₹' + inr(avail) + '.');
+  }
+  function checkMoney(db, mode, account, ref) {
+    if (MONEY.indexOf(mode) < 0) fail('Invalid payment mode.');
+    if (BANK.indexOf(mode) >= 0) {
+      if (s(ref).length < 4) fail(mode + ' needs a reference no. (UTR / UPI txn id / card approval / cheque no.).');
+      var accs = masters(db, 'ACCOUNT');
+      if (accs.length && accs.indexOf(s(account)) < 0) fail('Select the bank / UPI / POS account for ' + mode + '.');
+    }
+  }
+  function dupRefCheck(db, p, refs) {
+    if (p.allowDupRef || !refs.length) return;
+    var seen = [];
+    db.rows('Receipts').forEach(function (l) { if (l.Status === 'ACTIVE' && BANK.indexOf(l.Mode) >= 0 && refs.indexOf(up(l.RefNo)) >= 0) seen.push(l.RefNo + ' (' + l.RcptNo + ', bill ' + l.BillNo + ')'); });
+    db.rows('Advances').forEach(function (v) { if (v.Status === 'ACTIVE' && BANK.indexOf(v.Mode) >= 0 && refs.indexOf(up(v.RefNo)) >= 0) seen.push(v.RefNo + ' (' + v.AdvID + ')'); });
+    if (seen.length) fail('This reference no. is already used: ' + seen.join(', ') + '. One UTR can cover two bills only if the party really paid them together.', 'DUP_REF');
+  }
+
+  /* ---------------- bills ---------------- */
+  function parseBill(db, ctx, p, selfId) {
+    var b = {
+      BillNo: s(p.BillNo).toUpperCase(), BillDate: ymd(p.BillDate) || ctx.today(), Type: up(p.Type),
+      JobCardNo: s(p.JobCardNo).toUpperCase(), RegNo: s(p.RegNo).toUpperCase().replace(/\s+/g, ''),
+      Customer: s(p.Customer), Mobile: s(p.Mobile).replace(/\D/g, '').slice(-10), Advisor: s(p.Advisor),
+      BillAmount: r2(num(p.BillAmount)), Scheme: up(p.Scheme) || 'CUSTOMER', Insurer: s(p.Insurer), ClaimNo: s(p.ClaimNo).toUpperCase(), Remarks: s(p.Remarks)
+    };
+    if (!b.BillNo) fail('Bill no. is required.');
+    if (b.Type !== 'GR' && b.Type !== 'BS') fail('Select bill type: General Repair or Bodyshop.');
+    if (b.BillDate > ctx.today()) fail('Bill date cannot be in the future.');
+    if (!b.Customer) fail('Customer name is required.');
+    if (s(p.Mobile) && b.Mobile.length !== 10) fail('Mobile no. must be 10 digits.');
+    if (!(b.BillAmount > 0)) fail('Bill amount must be more than zero.');
+    if (b.Type === 'GR') b.Scheme = 'CUSTOMER';
+    if (['CUSTOMER','INSURANCE','SPLIT'].indexOf(b.Scheme) < 0) fail('Select who pays this bill.');
+    if (b.Scheme === 'CUSTOMER') { b.CustShare = b.BillAmount; b.InsShare = 0; b.Insurer = ''; b.ClaimNo = ''; }
+    else {
+      if (!b.Insurer) fail('Insurance company is required.');
+      if (!b.ClaimNo) fail('Claim no. is required for insurance bills.');
+      if (b.Scheme === 'INSURANCE') { b.CustShare = 0; b.InsShare = b.BillAmount; }
+      else {
+        var cs = r2(num(p.CustShare));
+        if (!(cs > 0) || cs >= b.BillAmount) fail('Customer share must be more than 0 and less than the bill amount.');
+        b.CustShare = cs; b.InsShare = r2(b.BillAmount - cs);
+      }
+    }
+    var dup = db.rows('Bills').filter(function (x) { return x.Status !== 'CANCELLED' && x.BillID !== selfId && up(x.BillNo) === b.BillNo && x.Type === b.Type; })[0];
+    if (dup) fail('Bill no. ' + b.BillNo + ' (' + b.Type + ') is already entered on ' + dup.BillDate + '.');
+    return b;
+  }
+
+  var A = {};
+
+  A['bill.create'] = function (db, ctx, me, p) {
+    need(me, 'bill.create');
+    var b = parseBill(db, ctx, p, null);
+    b.BillID = nextId(db, 'Bills', 'BillID', 'BL', ctx);
+    b.Status = 'ACTIVE'; b.CreditAllowed = ''; b.EnteredBy = me.name; b.EnteredAt = ctx.now();
+    db.append('Bills', b);
+    return { ref: b.BillID, BillID: b.BillID };
+  };
+
+  A['bill.edit'] = function (db, ctx, me, p) {
+    need(me, 'bill.edit');
+    var old = findBill(db, p.BillID);
+    if (old.Status !== 'ACTIVE') fail('Cancelled bills cannot be edited.');
+    var b = parseBill(db, ctx, p, old.BillID), e = enrich(old, billAgg(db)[old.BillID]);
+    if (b.CustShare < e.CustPaid - 0.009) fail('Customer has already paid ₹' + inr(e.CustPaid) + '. Customer share cannot be less than that.');
+    if (b.InsShare < e.InsPaid - 0.009) fail('Insurer has already settled ₹' + inr(e.InsPaid) + '. Insurance share cannot be less than that.');
+    if (!s(p.EditReason)) fail('Enter the reason for editing this bill.');
+    b.UpdatedBy = me.name; b.UpdatedAt = ctx.now();
+    var before = {}; Object.keys(b).forEach(function (k) { before[k] = old[k]; });
+    db.update('Bills', old._r, b);
+    return { ref: old.BillID, log: { reason: s(p.EditReason), before: before, after: b } };
+  };
+
+  A['bill.cancel'] = function (db, ctx, me, p) {
+    need(me, 'bill.cancel');
+    var b = findBill(db, p.BillID);
+    if (b.Status !== 'ACTIVE') fail('Bill is already cancelled.');
+    if (db.rows('Receipts').some(function (l) { return l.BillID === b.BillID && l.Status === 'ACTIVE'; })) fail('This bill has receipts. Reverse the receipts first.');
+    if (s(p.reason).length < 4) fail('Enter the reason for cancelling.');
+    db.update('Bills', b._r, { Status:'CANCELLED', CancelReason:s(p.reason), UpdatedBy:me.name, UpdatedAt:ctx.now() });
+    return { ref: b.BillID };
+  };
+
+  A['bill.credit'] = function (db, ctx, me, p) {
+    need(me, 'bill.credit');
+    var b = findBill(db, p.BillID), e = enrich(b, billAgg(db)[b.BillID]);
+    if (b.Status !== 'ACTIVE') fail('Bill is cancelled.');
+    if (p.remove) { need(me, 'bill.edit'); db.update('Bills', b._r, { CreditAllowed:'', CreditBy:'', CreditDue:'', CreditNote:'' }); return { ref:b.BillID }; }
+    if (e.CustDue <= 0.009) fail('Nothing is due from the customer on this bill.');
+    if (!s(p.CreditBy)) fail('Enter who approved the credit.');
+    var due = ymd(p.CreditDue); if (!due) fail('Enter the expected payment date.');
+    db.update('Bills', b._r, { CreditAllowed:'Y', CreditBy:s(p.CreditBy), CreditDue:due, CreditNote:s(p.CreditNote) });
+    return { ref: b.BillID };
+  };
+
+  /* ---------------- receipts against bills ---------------- */
+  A['receipt.create'] = function (db, ctx, me, p) {
+    need(me, 'receipt.create');
+    var d = entryDate(db, ctx, me, p.date); dayOpen(db, d);
+    var b = findBill(db, p.BillID);
+    if (b.Status !== 'ACTIVE') fail('Bill is cancelled.');
+    var payer = up(p.Payer);
+    if (payer !== 'CUSTOMER' && payer !== 'INSURANCE') fail('Select who is paying.');
+    var e = enrich(b, billAgg(db)[b.BillID]), due = payer === 'CUSTOMER' ? e.CustDue : e.InsDue;
+    if (due <= 0.009) fail('Nothing is due from the ' + payer.toLowerCase() + ' on this bill.');
+    var allowed = payer === 'CUSTOMER' ? ['CASH','UPI','NEFT','CARD','CHEQUE','ADV_ADJ','WRITEOFF'] : ['NEFT','CHEQUE','UPI','TDS','WRITEOFF'];
+    var total = 0, cash = 0, tds = 0, money = 0, advUse = {}, refs = [];
+    var lines = (p.lines || []).filter(function (l) { return n0(l.Amount) !== 0 || s(l.Mode); }).map(function (l) {
+      var mode = up(l.Mode), amt = r2(num(l.Amount));
+      if (allowed.indexOf(mode) < 0) fail((mode || 'Blank mode') + ' is not allowed for ' + payer.toLowerCase() + ' payments.');
+      if (!(amt > 0)) fail('Enter a valid amount for ' + mode + '.');
+      var o = { Mode:mode, Amount:amt, Account:'', RefNo:s(l.RefNo), AdvanceID:'' };
+      if (MONEY.indexOf(mode) >= 0) {
+        checkMoney(db, mode, l.Account, l.RefNo);
+        if (mode !== 'CASH') { o.Account = s(l.Account); refs.push(up(l.RefNo)); } else o.RefNo = '';
+        money += amt; if (mode === 'CASH') cash += amt;
+      } else if (mode === 'TDS') { tds += amt; }
+      else if (mode === 'WRITEOFF') { need(me, 'writeoff'); if (!s(p.Remarks)) fail('Write-off needs a reason in Remarks.'); }
+      else if (mode === 'ADV_ADJ') { var id = s(l.AdvanceID); if (!id) fail('Select the advance to adjust.'); advUse[id] = r2((advUse[id] || 0) + amt); o.AdvanceID = id; o.RefNo = id; }
+      total += amt; return o;
+    });
+    if (!lines.length) fail('Enter at least one payment line.');
+    total = r2(total);
+    if (total > due + 0.009) fail('Total ₹' + inr(total) + ' is more than the ' + payer.toLowerCase() + ' due ₹' + inr(due) + '.');
+    if (tds > 0) {
+      if (!(money > 0)) fail('Enter TDS together with the amount actually received from the insurer.');
+      var maxp = settingNum(db, 'TDS_MAX_PCT', 10);
+      if (tds > r2(e.InsShare * maxp / 100) + 0.009) fail('TDS looks too high (more than ' + maxp + '% of the insurance share). Please check.');
+    }
+    Object.keys(advUse).forEach(function (id) { var a = advBalance(db, id); if (advUse[id] > a.Balance + 0.009) fail('Advance ' + id + ' has only ₹' + inr(a.Balance) + ' balance.'); });
+    if (cash > 0) {
+      var lim = settingNum(db, 'CASH_RECEIPT_LIMIT', 199999);
+      if (e.CashRecd + cash > lim + 0.009) fail('Total cash against one bill cannot exceed ₹' + inr(lim) + ' (Sec 269ST). Take the balance by UPI / NEFT / card.');
+    }
+    dupRefCheck(db, p, refs);
+    var no = nextId(db, 'Receipts', 'RcptNo', 'RC', ctx), now = ctx.now(), party = payer === 'INSURANCE' ? s(b.Insurer) : s(b.Customer);
+    lines.forEach(function (o, i) {
+      db.append('Receipts', { LineID:no + '-' + (i + 1), RcptNo:no, RcptDate:d, BillID:b.BillID, BillNo:b.BillNo, BillType:b.Type, Party:party, Payer:payer,
+        Mode:o.Mode, Account:o.Account, Amount:o.Amount, RefNo:o.RefNo, AdvanceID:o.AdvanceID, Remarks:s(p.Remarks), Status:'ACTIVE',
+        EnteredBy:me.name, EnteredAt:now, ReconStatus:BANK.indexOf(o.Mode) >= 0 ? 'PENDING' : '' });
+    });
+    return { ref: no, RcptNo: no };
+  };
+
+  /* ---------------- advances ---------------- */
+  A['advance.create'] = function (db, ctx, me, p) {
+    need(me, 'advance.create');
+    var d = entryDate(db, ctx, me, p.date); dayOpen(db, d);
+    var v = { AdvDate:d, Party:s(p.Party), Mobile:s(p.Mobile).replace(/\D/g, '').slice(-10), RegNo:s(p.RegNo).toUpperCase().replace(/\s+/g, ''),
+      Purpose:s(p.Purpose), Amount:r2(num(p.Amount)), Mode:up(p.Mode), Account:'', RefNo:s(p.RefNo), Remarks:s(p.Remarks) };
+    if (!v.Party) fail('Party name is required.');
+    if (!v.Purpose) fail('Select the purpose of the advance.');
+    if (!(v.Amount > 0)) fail('Enter a valid amount.');
+    checkMoney(db, v.Mode, p.Account, p.RefNo);
+    if (v.Mode !== 'CASH') { v.Account = s(p.Account); dupRefCheck(db, p, [up(v.RefNo)]); } else v.RefNo = '';
+    if (v.Mode === 'CASH' && v.Amount > settingNum(db, 'CASH_RECEIPT_LIMIT', 199999)) fail('Cash advance cannot exceed ₹' + inr(settingNum(db, 'CASH_RECEIPT_LIMIT', 199999)) + ' (Sec 269ST).');
+    v.AdvID = nextId(db, 'Advances', 'AdvID', 'AD', ctx); v.Status = 'ACTIVE'; v.EnteredBy = me.name; v.EnteredAt = ctx.now();
+    v.ReconStatus = BANK.indexOf(v.Mode) >= 0 ? 'PENDING' : '';
+    db.append('Advances', v);
+    return { ref: v.AdvID, AdvID: v.AdvID };
+  };
+
+  /* ---------------- expenses / payments ---------------- */
+  A['payment.create'] = function (db, ctx, me, p) {
+    need(me, 'payment.create');
+    var d = entryDate(db, ctx, me, p.date); dayOpen(db, d);
+    var x = { PayDate:d, ExpGroup:s(p.ExpGroup), Category:s(p.Category), Payee:s(p.Payee), Narration:s(p.Narration).replace(/\s+/g, ' '), Amount:r2(num(p.Amount)), Mode:up(p.Mode),
+      Account:'', RefNo:s(p.RefNo), SupplierBillNo:s(p.SupplierBillNo), HasBill:up(p.HasBill) === 'Y' ? 'Y' : 'N', LinkID:s(p.LinkID), ApprovedBy:s(p.ApprovedBy), Remarks:s(p.Remarks) };
+    if (x.LinkID) {
+      x.ExpGroup = REFUND_GROUP; x.Category = REFUND_CAT;
+      var a = advBalance(db, x.LinkID);
+      if (x.Amount > a.Balance + 0.009) fail('Advance ' + x.LinkID + ' has only ₹' + inr(a.Balance) + ' balance to refund.');
+      if (!x.Payee) x.Payee = a.Party;
+      if (!x.Narration) x.Narration = 'Refund of advance ' + x.LinkID + ' (' + a.Purpose + ') to ' + x.Payee;
+    } else {
+      if (!x.ExpGroup) fail('Select the account group (header).');
+      if (!x.Category) fail('Select the expense ledger.');
+      if (x.Category === REFUND_CAT) fail('Refund an advance from the Advances screen.');
+      var mp = expMap(db);
+      if (Object.keys(mp).length) {
+        if (!mp.hasOwnProperty(x.ExpGroup)) fail('"' + x.ExpGroup + '" is not an active account group.');
+        if (mp[x.ExpGroup].indexOf(x.Category) < 0) fail('Ledger "' + x.Category + '" is not under "' + x.ExpGroup + '".');
+      }
+    }
+    if (x.Narration.length < 5) fail('Enter the narration — what was this expense for?');
+    if (!x.Payee) fail('Paid to (payee) is required.');
+    if (!(x.Amount > 0)) fail('Enter a valid amount.');
+    checkMoney(db, x.Mode, p.Account, p.RefNo);
+    if (x.Mode !== 'CASH') x.Account = s(p.Account); else x.RefNo = '';
+    if (x.Amount > settingNum(db, 'EXP_APPROVAL_LIMIT', 2000) && !x.ApprovedBy) fail('Payments above ₹' + inr(settingNum(db, 'EXP_APPROVAL_LIMIT', 2000)) + ' need "Approved by".');
+    if (x.Mode === 'CASH') {
+      var lim = settingNum(db, 'CASH_EXP_LIMIT', 10000);
+      if (!x.LinkID && x.Amount > lim && !can(me, 'bigcash')) fail('Cash payment above ₹' + inr(lim) + ' to one party is not allowed for cashier (Sec 40A(3)). Pay by bank, or ask Accounts.');
+      checkCashOut(db, d, x.Amount);
+    }
+    x.PayID = nextId(db, 'Payments', 'PayID', 'EX', ctx); x.Status = 'ACTIVE'; x.EnteredBy = me.name; x.EnteredAt = ctx.now();
+    x.ReconStatus = BANK.indexOf(x.Mode) >= 0 ? 'PENDING' : '';
+    db.append('Payments', x);
+    return { ref: x.PayID, PayID: x.PayID };
+  };
+
+  /* ---------------- contra ---------------- */
+  A['contra.create'] = function (db, ctx, me, p) {
+    need(me, 'contra.create');
+    var d = entryDate(db, ctx, me, p.date); dayOpen(db, d);
+    var c = { CDate:d, CType:up(p.CType), Amount:r2(num(p.Amount)), Account:s(p.Account), RefNo:s(p.RefNo), Remarks:s(p.Remarks) };
+    if (!CONTRA[c.CType]) fail('Select the type of cash movement.');
+    if (!(c.Amount > 0)) fail('Enter a valid amount.');
+    var bankSide = c.CType === 'CASH_TO_BANK' || c.CType === 'BANK_TO_CASH';
+    if (bankSide) { var accs = masters(db, 'ACCOUNT'); if (accs.length && accs.indexOf(c.Account) < 0) fail('Select the bank account.'); if (s(c.RefNo).length < 3) fail('Enter deposit slip / cheque / txn no.'); }
+    else { c.Account = ''; if (!c.Remarks) fail('Enter who carried / handed over the cash in Remarks.'); }
+    if (CONTRA[c.CType] < 0) checkCashOut(db, d, c.Amount);
+    c.ContraID = nextId(db, 'Contra', 'ContraID', 'CT', ctx); c.Status = 'ACTIVE'; c.EnteredBy = me.name; c.EnteredAt = ctx.now();
+    c.ReconStatus = bankSide ? 'PENDING' : '';
+    db.append('Contra', c);
+    return { ref: c.ContraID };
+  };
+
+  /* ---------------- reversal (no deletes anywhere) ---------------- */
+  A['reverse'] = function (db, ctx, me, p) {
+    need(me, 'reverse');
+    var t = s(p.table), m = TMETA[t], id = s(p.id), reason = s(p.reason);
+    if (!m || t === 'Bills') fail('Invalid entry type.');
+    if (reason.length < 4) fail('Enter a proper reason for reversal.');
+    var rows = db.rows(t).filter(function (r) { return t === 'Receipts' ? r.RcptNo === id : s(r[m.id]) === id; });
+    if (!rows.length) fail('Entry not found.');
+    var act = rows.filter(function (r) { return r.Status === 'ACTIVE'; });
+    if (!act.length) fail('Already reversed.');
+    var d = ymd(rows[0][m.date]); dayOpen(db, d);
+    if (t === 'Advances') { var a = advAgg(db)[id]; if (a && a.adj + a.ref > 0.009) fail('This advance is already adjusted / refunded. Reverse those entries first.'); }
+    var cashIn = 0;
+    act.forEach(function (r) {
+      if ((t === 'Receipts' || t === 'Advances') && r.Mode === 'CASH') cashIn += n0(r.Amount);
+      if (t === 'Contra' && CONTRA[r.CType] > 0) cashIn += n0(r.Amount);
+    });
+    if (cashIn > 0) checkCashOut(db, d, r2(cashIn));
+    var now = ctx.now();
+    act.forEach(function (r) { db.update(t, r._r, { Status:'REVERSED', RevReason:reason, RevBy:me.name, RevAt:now }); });
+    var v = rows.map(function (r) { return s(r.TallyVch); }).filter(String)[0];
+    return { ref: id, warning: v ? 'This entry was already booked in Tally (voucher ' + v + '). Cancel / reverse it in Tally also.' : '' };
+  };
+
+  /* ---------------- reconciliation marks ---------------- */
+  A['recon.mark'] = function (db, ctx, me, p) {
+    need(me, 'recon');
+    var st = p.status === 'PENDING' ? 'PENDING' : 'RECONCILED', rd = st === 'RECONCILED' ? (ymd(p.date) || ctx.today()) : '', n = 0;
+    (p.items || []).forEach(function (it) {
+      var t = s(it.table), m = TMETA[t]; if (!m || t === 'Bills') return;
+      var r = db.rows(t).filter(function (x) { return s(x[m.id]) === s(it.id); })[0];
+      if (!r || r.Status !== 'ACTIVE' || s(r.ReconStatus) === '') return;
+      db.update(t, r._r, { ReconStatus:st, ReconDate:rd, ReconBy:st === 'RECONCILED' ? me.name : '' }); n++;
+    });
+    if (!n) fail('Nothing was updated.');
+    return { ref: n + ' entries', count: n };
+  };
+
+  A['tally.mark'] = function (db, ctx, me, p) {
+    need(me, 'tally');
+    var vch = s(p.vch), n = 0;
+    (p.items || []).forEach(function (it) {
+      var t = s(it.table), m = TMETA[t]; if (!m) return;
+      var r = db.rows(t).filter(function (x) { return s(x[m.id]) === s(it.id); })[0];
+      if (!r || r.Status === 'REVERSED' || r.Status === 'CANCELLED') return;
+      db.update(t, r._r, { TallyVch:vch, TallyBy:vch ? me.name + ' ' + ctx.now().slice(0, 10) : '' }); n++;
+    });
+    if (!n) fail('Nothing was updated.');
+    return { ref: n + ' entries', count: n };
+  };
+
+  /* ---------------- day close ---------------- */
+  var DEN = [500, 200, 100, 50, 20, 10];
+  function dayFigures(db, d) {
+    var mv = cashMoves(db), op = cashBalance(db, d, mv), ci = 0, co = 0;
+    mv.forEach(function (x) { if (x.date === d) { if (x.amt > 0) ci += x.amt; else co -= x.amt; } });
+    return { Opening:op, CashIn:r2(ci), CashOut:r2(co), Expected:r2(op + ci - co) };
+  }
+  A['day.close'] = function (db, ctx, me, p) {
+    need(me, 'day.close');
+    var d = ymd(p.date) || ctx.today();
+    if (d > ctx.today()) fail('Cannot close a future date.');
+    var od = setting(db, 'OPENING_DATE', ''); if (od && d < od) fail('Date is before the cash book start date.');
+    var ex = dayRec(db, d);
+    if (ex && (ex.Status === 'CLOSED' || ex.Status === 'VERIFIED')) fail('This day is already ' + ex.Status.toLowerCase() + '.');
+    var f = dayFigures(db, d), den = p.denoms || {}, dn = {}, cnt = 0;
+    DEN.forEach(function (v) { var k = parseInt(den[v], 10) || 0; if (k < 0) fail('Invalid note count.'); dn[v] = k; cnt += k * v; });
+    dn.coins = r2(n0(den.coins)); if (dn.coins < 0) fail('Invalid coins amount.');
+    cnt = r2(cnt + dn.coins);
+    var diff = r2(cnt - f.Expected);
+    if (Math.abs(diff) > 0.009 && s(p.Remarks).length < 4) fail('Cash counted (₹' + inr(cnt) + ') differs from cash book (₹' + inr(f.Expected) + ') by ₹' + inr(diff) + '. Enter the reason in Remarks.', 'CASH_DIFF');
+    var o = { CloseDate:d, Opening:f.Opening, CashIn:f.CashIn, CashOut:f.CashOut, Expected:f.Expected, Counted:cnt, Denoms:JSON.stringify(dn), Diff:diff,
+      Remarks:s(p.Remarks), Status:'CLOSED', ClosedBy:me.name, ClosedAt:ctx.now(), VerifiedBy:'', VerifiedAt:'' };
+    if (ex) db.update('DayClose', ex._r, o); else db.append('DayClose', o);
+    return { ref: d, Expected:f.Expected, Counted:cnt, Diff:diff };
+  };
+  A['day.verify'] = function (db, ctx, me, p) {
+    need(me, 'day.verify');
+    var r = dayRec(db, ymd(p.date)); if (!r || r.Status !== 'CLOSED') fail('Only a closed day can be verified.');
+    var f = dayFigures(db, ymd(p.date));
+    if (Math.abs(f.Expected - n0(r.Expected)) > 0.009) fail('Entries changed after closing (book now ₹' + inr(f.Expected) + ', at closing ₹' + inr(r.Expected) + '). Reopen and close again.');
+    db.update('DayClose', r._r, { Status:'VERIFIED', VerifiedBy:me.name, VerifiedAt:ctx.now() });
+    return { ref: ymd(p.date) };
+  };
+  A['day.reopen'] = function (db, ctx, me, p) {
+    var r = dayRec(db, ymd(p.date)); if (!r) fail('Day is not closed.');
+    if (r.Status === 'VERIFIED') need(me, 'admin'); else if (r.Status === 'CLOSED') need(me, 'day.verify'); else fail('Day is not closed.');
+    if (s(p.reason).length < 4) fail('Enter the reason for reopening.');
+    db.update('DayClose', r._r, { Status:'REOPENED', ReopenedBy:me.name + ': ' + s(p.reason), ReopenedAt:ctx.now() });
+    return { ref: ymd(p.date) };
+  };
+
+  /* ---------------- admin ---------------- */
+  A['user.save'] = function (db, ctx, me, p) {
+    need(me, 'admin');
+    var role = up(p.Role), pin = s(p.PIN), name = s(p.Name), active = up(p.Active) === 'N' ? 'N' : 'Y';
+    if (!name) fail('Name is required.');
+    if (ALL.indexOf(role) < 0) fail('Invalid role.');
+    if (!/^\d{4,6}$/.test(pin)) fail('PIN must be 4 to 6 digits.');
+    var users = db.rows('Users'), ex = users.filter(function (u) { return s(u.UserID) === s(p.UserID); })[0];
+    if (users.some(function (u) { return s(u.PIN).replace(/^'/, '') === pin && u !== ex && up(u.Active) !== 'N'; })) fail('This PIN is already used by another user.');
+    var o = { Name:name, Role:role, PIN:"'" + pin, Active:active };
+    if (ex) {
+      var owners = users.filter(function (u) { return up(u.Role) === 'OWNER' && up(u.Active) !== 'N' && u !== ex; }).length;
+      if (!owners && (role !== 'OWNER' || active === 'N')) fail('At least one active Owner must remain.');
+      db.update('Users', ex._r, o);
+      return { ref: ex.UserID, log: { user: ex.UserID, name: name, role: role, active: active } };
+    }
+    o.UserID = nextId(db, 'Users', 'UserID', 'U', ctx);
+    db.append('Users', o);
+    return { ref: o.UserID, log: { user: o.UserID, name: name, role: role } };
+  };
+  A['master.save'] = function (db, ctx, me, p) {
+    need(me, 'admin');
+    var list = up(p.List), val = s(p.Value), act = up(p.Active) === 'N' ? 'N' : 'Y', par = '';
+    if (!DEFAULTS.masters.hasOwnProperty(list)) fail('Invalid list.');
+    if (!val) fail('Value is required.');
+    if (list === 'EXP_CAT') {
+      par = s(p.Parent);
+      if (masters(db, 'EXP_GROUP').indexOf(par) < 0) fail('Select a valid account group for this ledger.');
+    }
+    if (list === 'EXP_GROUP' && val === REFUND_GROUP) fail('"' + REFUND_GROUP + '" is reserved for advance refunds.');
+    var ex = db.rows('Masters').filter(function (x) { return s(x.List) === list && up(x.Value) === up(val) && (list !== 'EXP_CAT' || s(x.Parent) === par); })[0];
+    if (ex) db.update('Masters', ex._r, { Value:val, Active:act, Parent:par }); else db.append('Masters', { List:list, Value:val, Active:act, Parent:par });
+    return { ref: list + ':' + val };
+  };
+  A['setting.save'] = function (db, ctx, me, p) {
+    need(me, 'admin');
+    var k = s(p.Key), v = s(p.Value), def = DEFAULTS.settings.filter(function (x) { return x[0] === k; })[0];
+    if (!def) fail('Unknown setting.');
+    if (k === 'OPENING_DATE' && v && !ymd(v)) fail('Date must be yyyy-mm-dd.');
+    if (k !== 'WORKSHOP_NAME' && k !== 'OPENING_DATE' && isNaN(num(v))) fail('Enter a number.');
+    if (k === 'OPENING_DATE' || k === 'OPENING_CASH') {
+      if (db.rows('DayClose').some(function (x) { return x.Status === 'VERIFIED'; })) fail('Verified days exist. Opening balance can no longer be changed.');
+    }
+    var ex = db.rows('Settings').filter(function (x) { return s(x.Key) === k; })[0];
+    if (ex) db.update('Settings', ex._r, { Value:v }); else db.append('Settings', { Key:k, Value:v, Note:def[2] });
+    return { ref: k, log: { key: k, from: ex ? ex.Value : '', to: v } };
+  };
+
+  /* ---------------- reads ---------------- */
+  function publicData(db, me) {
+    var ms = {}; Object.keys(DEFAULTS.masters).forEach(function (k) { ms[k] = masters(db, k); });
+    ms.EXP_MAP = expMap(db);
+    var st = {}; DEFAULTS.settings.forEach(function (x) { st[x[0]] = setting(db, x[0], x[1]); });
+    return { masters: ms, settings: st };
+  }
+  A['load'] = function (db, ctx, me, p) {
+    var t = ctx.today(), from = ymd(p.from) || t.slice(0, 8) + '01', to = ymd(p.to) || t;
+    if (from > to) fail('From date is after To date.');
+    var agg = billAgg(db), inR = function (d) { d = ymd(d); return d >= from && d <= to; };
+    var ids = {};
+    db.rows('Receipts').forEach(function (l) { if (inR(l.RcptDate)) ids[l.BillID] = 1; });
+    var bills = [];
+    db.rows('Bills').forEach(function (b) {
+      var e = enrich(b, agg[b.BillID]);
+      if (ids[b.BillID] || inR(b.BillDate) || (e.Status === 'ACTIVE' && e.TotalDue > 0.009)) { bills.push(e); ids[b.BillID] = 1; }
+    });
+    var res = publicData(db, me);
+    res.me = me; res.today = t; res.from = from; res.to = to; res.bills = bills;
+    res.receipts = db.rows('Receipts').filter(function (l) { return ids[l.BillID]; }).map(clean);
+    if (me.role !== 'ADVISOR') {
+      var aa = advAgg(db);
+      res.advances = db.rows('Advances').map(function (v) { return enrichAdv(v, aa[s(v.AdvID)]); }).filter(function (v) { return inR(v.AdvDate) || v.AdvStatus === 'OPEN' || v.AdvStatus === 'PART'; });
+      res.payments = db.rows('Payments').filter(function (x) { return inR(x.PayDate); }).map(clean);
+      res.contra = db.rows('Contra').filter(function (x) { return inR(x.CDate); }).map(clean);
+      res.dayclose = db.rows('DayClose').filter(function (x) { return inR(x.CloseDate) || ymd(x.CloseDate) === t; }).map(clean);
+      var mv = cashMoves(db);
+      res.cashbook = { opening: cashBalance(db, from, mv), moves: mv.filter(function (x) { return x.date >= from && x.date <= to; }) };
+      res.cashNow = cashBalance(db, null, mv);
+      res.todayFig = dayFigures(db, t);
+    }
+    if (me.role === 'OWNER') res.users = db.rows('Users').map(function (u) { var o = clean(u); o.PIN = s(u.PIN).replace(/^'/, ''); return o; });
+    return res;
+  };
+  A['bill.search'] = function (db, ctx, me, p) {
+    var q = up(p.q); if (q.length < 2) fail('Type at least 2 characters.');
+    var agg = billAgg(db), out = db.rows('Bills').filter(function (b) {
+      return [b.BillNo, b.RegNo, b.Customer, b.Mobile, b.ClaimNo, b.JobCardNo].some(function (v) { return up(v).indexOf(q) >= 0; });
+    }).slice(-60).map(function (b) { return enrich(b, agg[b.BillID]); });
+    var ids = {}; out.forEach(function (b) { ids[b.BillID] = 1; });
+    return { bills: out, receipts: db.rows('Receipts').filter(function (l) { return ids[l.BillID]; }).map(clean) };
+  };
+  A['day.figures'] = function (db, ctx, me, p) { need(me, 'day.close'); var d = ymd(p.date) || ctx.today(); return dayFigures(db, d); };
+  var READS = { 'load':1, 'bill.search':1, 'day.figures':1 };
+
+  /* ---------------- auth, log, dispatcher ---------------- */
+  function auth(db, pin) {
+    pin = s(pin).replace(/^'/, '');
+    if (!pin) fail('Enter your PIN.', 'AUTH');
+    var u = db.rows('Users').filter(function (x) { return s(x.PIN).replace(/^'/, '') === pin && up(x.Active) !== 'N'; })[0];
+    if (!u) fail('Wrong PIN.', 'AUTH');
+    return { id: s(u.UserID), name: s(u.Name), role: up(u.Role) };
+  }
+  function findClientRef(db, cr) {
+    var L = db.rows('Log');
+    for (var i = L.length - 1, k = 0; i >= 0 && k < 400; i--, k++) if (s(L[i].ClientRef) === cr) return L[i];
+    return null;
+  }
+  function log(db, ctx, me, action, ref, details, cr) {
+    var txt = ''; try { txt = JSON.stringify(details); } catch (e) { txt = String(details); }
+    if (txt.length > 40000) txt = txt.slice(0, 40000);
+    db.append('Log', { TS:ctx.now(), User:me.name, Role:me.role, Action:action, Ref:s(ref), ClientRef:s(cr), Details:txt });
+  }
+
+  function handle(db, ctx, action, payload, pin, clientRef) {
+    try {
+      action = s(action); payload = payload || {};
+      if (action === 'ping') return { ok:true, data:{ today: ctx.today(), version:'1.0' } };
+      var me = auth(db, pin);
+      if (action === 'login') return { ok:true, data:{ me: me, today: ctx.today() } };
+      var fn = A[action]; if (!fn) fail('Unknown action: ' + action);
+      if (READS[action]) return { ok:true, data: fn(db, ctx, me, payload) };
+      return db.withLock(function () {
+        if (clientRef) { var prev = findClientRef(db, s(clientRef)); if (prev) return { ok:true, data:{ duplicate:true, ref: prev.Ref } }; }
+        var res = fn(db, ctx, me, payload) || {};
+        var det = res.log || payload; delete res.log;
+        log(db, ctx, me, action, res.ref || '', det, clientRef);
+        return { ok:true, data:res };
+      });
+    } catch (e) {
+      return { ok:false, error: e.userError ? e.message : ('Server error: ' + (e && e.message ? e.message : e)), code: e.code || '' };
+    }
+  }
+
+  return { SCHEMA:SCHEMA, DEFAULTS:DEFAULTS, MONEY:MONEY, BANK:BANK, CONTRA:CONTRA, CONTRA_LBL:CONTRA_LBL, PERM:PERM, REFUND_CAT:REFUND_CAT, REFUND_GROUP:REFUND_GROUP, handle:handle, inr:inr, addDays:addDays };
+})();
+
+</script>
+<script>
+/* In-memory adapter (browser demo + tests) */
+function MemDB(store) {
+  store = store || {};
+  return {
+    store: store,
+    rows: function (t) { return store[t] || (store[t] = []); },
+    append: function (t, o) { var a = store[t] || (store[t] = []); var r = Object.assign({}, o); if (typeof r.PIN === 'string') r.PIN = r.PIN.replace(/^'/, ''); r._r = a.length + 2; a.push(r); },
+    update: function (t, r, o) { var x = Object.assign({}, o); if (typeof x.PIN === 'string') x.PIN = x.PIN.replace(/^'/, ''); Object.assign(store[t][r - 2], x); },
+    withLock: function (fn) { return fn(); }
+  };
+}
+function seedMem(db, today) {
+  db.append('Users', { UserID:'U-0001', Name:'Owner', Role:'OWNER', PIN:'1111', Active:'Y' });
+  db.append('Users', { UserID:'U-0002', Name:'Accounts', Role:'ACCOUNTS', PIN:'2222', Active:'Y' });
+  db.append('Users', { UserID:'U-0003', Name:'Cashier', Role:'CASHIER', PIN:'3333', Active:'Y' });
+  db.append('Users', { UserID:'U-0004', Name:'Advisor', Role:'ADVISOR', PIN:'4444', Active:'Y' });
+  WA.DEFAULTS.settings.forEach(function (x) { db.append('Settings', { Key:x[0], Value:x[1], Note:x[2] }); });
+  Object.keys(WA.DEFAULTS.masters).forEach(function (k) { WA.DEFAULTS.masters[k].forEach(function (v) { var a = Array.isArray(v); db.append('Masters', { List:k, Value:a ? v[0] : v, Parent:a ? v[1] : '', Active:'Y' }); }); });
+  ['Rahul (SA)','Deepak (SA)','Sunil (BS)'].forEach(function (v) { db.append('Masters', { List:'ADVISOR', Value:v, Active:'Y' }); });
+}
+
+</script>
+<script>
+/* =================== CONFIG =================== */
+const API_URL = 'https://script.google.com/macros/s/AKfycbz5RArrHq9AwhiblhY-ca5Fnexqu13aIlMWeEh999VR2m6UEZ5Jht5ztq-dTmPSEFK6gw/exec';            // ← paste the Workshop Accounts Apps Script web-app URL here
+const GAS = typeof google !== 'undefined' && google.script && google.script.run;   // page served from Apps Script itself
+const DEMO = /[?&]demo=1/.test(location.search) || (!GAS && !API_URL);
+
+/* =================== UTILS =================== */
+const $ = q => document.querySelector(q);
+const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const N = v => { const n = Number(v); return isFinite(n) ? n : 0; };
+const r2 = n => Math.round(N(n) * 100) / 100;
+const inr = n => '₹' + WA.inr(n);
+const amt = n => WA.inr(n);
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fd = d => { d = String(d || '').slice(0, 10); if (!/^\d{4}-\d\d-\d\d$/.test(d)) return esc(d); return d.slice(8) + '-' + MON[+d.slice(5, 7) - 1] + '-' + d.slice(2, 4); };
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const istNow = () => new Date(Date.now() + 330 * 60000).toISOString().replace('T', ' ').slice(0, 19);
+const istToday = () => istNow().slice(0, 10);
+const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+const sum = (a, f) => r2(a.reduce((t, x) => t + N(f(x)), 0));
+const MONEY = WA.MONEY, BANK = WA.BANK;
+const ML = { CASH:'Cash', UPI:'UPI', NEFT:'NEFT/RTGS/IMPS', CARD:'Card', CHEQUE:'Cheque', TDS:'TDS deducted', WRITEOFF:'Write-off / Short pay', ADV_ADJ:'Adjust advance' };
+const store = { get: k => { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }, set: (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} } };
+function toast(m, e) { const t = $('#toast'); t.textContent = m; t.className = 'on' + (e ? ' e' : ''); clearTimeout(t._h); t._h = setTimeout(() => t.className = '', e ? 5000 : 2600); }
+function busy(on) { $('#busy').className = on ? 'on' : ''; }
+function formVals(root) { const o = {}; (typeof root === 'string' ? $(root) : root).querySelectorAll('[name]').forEach(el => { if ((el.type === 'radio' || el.type === 'checkbox') && !el.checked) { if (el.type === 'checkbox') o[el.name] = ''; return; } o[el.name] = el.value; }); return o; }
+const opt = (list, sel, blank) => (blank !== undefined ? `<option value="">${esc(blank)}</option>` : '') + list.map(v => { const [val, lbl] = Array.isArray(v) ? v : [v, v]; return `<option value="${esc(val)}"${String(val) === String(sel) ? ' selected' : ''}>${esc(lbl)}</option>`; }).join('');
+const fld = (label, inner, cls, req) => `<div class="f ${cls || ''}"><label class="${req ? 'req' : ''}">${label}</label>${inner}</div>`;
+const inp = (name, val, attrs) => `<input name="${name}" value="${esc(val == null ? '' : val)}" ${attrs || ''}>`;
+
+/* =================== API =================== */
+let DEMO_DB = null;
+const DEMO_CTX = { today: istToday, now: istNow };
+function call(action, payload, write, ref) {
+  if (DEMO) return new Promise(res => setTimeout(() => res(JSON.parse(JSON.stringify(WA.handle(DEMO_DB, DEMO_CTX, action, payload, S.pin, ref)))), 150));
+  if (GAS) return new Promise((res, rej) => google.script.run
+    .withSuccessHandler(t => { try { res(JSON.parse(t)); } catch (e) { rej(new Error('Unexpected server reply.')); } })
+    .withFailureHandler(e => rej(new Error((e && e.message ? e.message : 'Network error') + (write ? ' — press Save again, it will not create a duplicate.' : ''))))
+    .apiCall(action, JSON.stringify(payload || {}), S.pin, ref || ''));
+  const q = 'action=' + encodeURIComponent(action) + '&pin=' + encodeURIComponent(S.pin) + '&payload=' + encodeURIComponent(JSON.stringify(payload || {})) + (ref ? '&clientRef=' + ref : '') + '&nonce=' + uid();
+  if (!write) return jsonp(API_URL + '?' + q);
+  return new Promise((res, rej) => {
+    const x = new XMLHttpRequest(); x.open('GET', API_URL + '?' + q); x.timeout = 60000;
+    x.onload = () => { try { res(JSON.parse(x.responseText)); } catch (e) { rej(new Error('Unexpected server reply. Check the list before saving again.')); } };
+    x.onerror = () => rej(new Error('Network error. Press Save again — it will not create a duplicate.'));
+    x.ontimeout = () => rej(new Error('Server is slow. Press Save again — it will not create a duplicate.'));
+    x.send();
+  });
+}
+function jsonp(url) {
+  return new Promise((res, rej) => {
+    const cb = 'cb_' + uid(), sc = document.createElement('script');
+    const t = setTimeout(() => { done(); rej(new Error('Server not responding')); }, 45000);
+    function done() { clearTimeout(t); delete window[cb]; sc.remove(); }
+    window[cb] = d => { done(); res(d); };
+    sc.onerror = () => { done(); rej(new Error('Network error')); };
+    sc.src = url + '&callback=' + cb; document.head.appendChild(sc);
+  });
+}
+async function api(action, payload, write, ref) {
+  const r = await call(action, payload, write, ref);
+  if (!r || !r.ok) { const e = new Error(r ? r.error : 'No response'); e.code = r && r.code; throw e; }
+  return r.data;
+}
+
+/* =================== STATE =================== */
+const S = { pin: '', me: null, d: null, tab: 'home', from: '', to: '', bf: { q: '', type: '', st: 'all' }, ef: { cat: '' }, rtab: 'bank', rf: { st: 'PENDING', acc: '' }, rpt: 'collection', sel: {} };
+let M = {};
+const D = () => S.d;
+const role = () => S.me ? S.me.role : '';
+const isAcc = () => ['ACCOUNTS', 'OWNER'].includes(role());
+const isCash = () => ['CASHIER', 'ACCOUNTS', 'OWNER'].includes(role());
+const isOwner = () => role() === 'OWNER';
+
+async function load(keepTab) {
+  busy(true);
+  try { S.d = await api('load', { from: S.from, to: S.to }); S.me = S.d.me; S.from = S.d.from; S.to = S.d.to; render(); }
+  catch (e) { toast(e.message, 1); if (e.code === 'AUTH') logout(); }
+  finally { busy(false); }
+}
+async function post(action, payload, msg, after) {
+  if (M.busy) return; M.busy = true; const sb = $('#mbody .save'); if (sb) sb.disabled = true;
+  try {
+    const r = await api(action, payload, true, M.ref || uid());
+    const keep = M.keepOpen; if (!keep) closeModal();
+    toast(r && r.duplicate ? 'Already saved earlier — not duplicated' : msg + (r && r.ref ? ' · ' + r.ref : ''));
+    if (r && r.warning) alert(r.warning);
+    await load();
+    if (after) after(r);
+  } catch (e) {
+    if (e.code === 'DUP_REF' && confirm(e.message + '\n\nSave anyway?')) { M.busy = false; return post(action, Object.assign({}, payload, { allowDupRef: true }), msg, after); }
+    showErr(e.message);
+  } finally { M.busy = false; const b2 = $('#mbody .save'); if (b2) b2.disabled = false; }
+}
+function showErr(m) { const el = $('#mbody .err'); if (el && !$('#modal').classList.contains('hidden')) { el.textContent = m; el.classList.remove('hidden'); el.scrollIntoView({ block: 'nearest' }); } else toast(m, 1); }
+function openModal(html, extra) { M = Object.assign({ ref: uid() }, extra || {}); $('#mbody').innerHTML = html; $('#modal').classList.remove('hidden'); const f = $('#mbody input:not([type=hidden]):not([type=radio]):not([type=checkbox]), #mbody select'); if (f && window.innerWidth > 720) f.focus(); }
+function closeModal() { $('#modal').classList.add('hidden'); $('#mbody').innerHTML = ''; M = {}; }
+const errBox = '<div class="err hidden"></div>';
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#modal').classList.contains('hidden')) closeModal(); });
+
+/* =================== LOGIN / SHELL =================== */
+function vLogin() {
+  return `<div class="login"><div class="card">
+    <div style="display:flex;justify-content:center;align-items:center;gap:8px;font-weight:700;font-size:18px"><i style="width:10px;height:24px;background:var(--red);border-radius:2px;display:inline-block"></i>Workshop Accounts</div>
+    <div class="mut sm" style="margin-top:4px">Planet Toyota · Bills · Receipts · Expenses · Cash Book</div>
+    <input id="pin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="PIN" onkeydown="if(event.key==='Enter')doLogin()">
+    <label class="sm"><input type="checkbox" id="rem" checked> Keep me signed in on this device</label>
+    <div style="margin-top:14px"><button class="btn p" style="width:100%" onclick="doLogin()">Sign in</button></div>
+    ${DEMO ? '<div class="note" style="text-align:left">Demo mode (nothing is saved). PINs — Owner 1111 · Accounts 2222 · Cashier 3333 · Advisor 4444</div>' : ''}
+  </div></div>`;
+}
+async function doLogin() {
+  const p = $('#pin').value.trim(); if (!p) return;
+  S.pin = p; busy(true);
+  try { const r = await api('login', {}); S.me = r.me; if ($('#rem').checked) store.set('wa_pin', p); S.from = DEMO ? WA.addDays(r.today, -4) : r.today.slice(0, 8) + '01'; S.to = r.today; S.tab = 'home'; await load(); }
+  catch (e) { S.pin = ''; toast(e.message, 1); }
+  finally { busy(false); }
+}
+function logout() { closeModal(); store.set('wa_pin', ''); S.pin = ''; S.me = null; S.d = null; render(); }
+function tabsFor() {
+  const r = role(), t = [['home', 'Home'], ['bills', 'Bills']];
+  if (r !== 'ADVISOR') t.push(['advances', 'Advances'], ['expenses', 'Expenses'], ['cash', 'Cash Book']);
+  if (isAcc()) t.push(['recon', 'Reconcile']);
+  if (r !== 'ADVISOR') t.push(['reports', 'Reports']);
+  if (isOwner()) t.push(['settings', 'Settings']);
+  return t;
+}
+function render() {
+  if (!S.me || !S.d) { $('#app').innerHTML = (DEMO ? '<div class="demo">DEMO MODE — sample data, nothing is saved. Paste your Apps Script URL in API_URL to go live.</div>' : '') + vLogin(); setTimeout(() => $('#pin') && $('#pin').focus(), 50); return; }
+  const t = tabsFor(); if (!t.some(x => x[0] === S.tab)) S.tab = 'home';
+  $('#app').innerHTML = `${DEMO ? '<div class="demo">DEMO MODE — sample data, nothing is saved</div>' : ''}
+  <div class="top"><div class="brand"><i></i>Workshop Accounts</div><div class="sp"></div>
+    <div class="rng">From <input type="date" value="${S.from}" onchange="S.from=this.value;load()"> To <input type="date" value="${S.to}" max="${D().today}" onchange="S.to=this.value;load()">
+    <button class="ghost" onclick="load()" title="Refresh">↻</button></div>
+    <span class="who">${esc(S.me.name)} · ${esc(S.me.role)}</span><button class="ghost" onclick="logout()">Sign out</button></div>
+  <nav class="tabs">${t.map(x => `<button class="${x[0] === S.tab ? 'on' : ''}" onclick="go('${x[0]}')">${x[1]}</button>`).join('')}</nav>
+  <main id="main">${VIEWS[S.tab]()}</main>`;
+}
+function go(t) { S.tab = t; render(); window.scrollTo(0, 0); }
+
+/* =================== BADGES =================== */
+function payBadge(b) {
+  const m = { PAID:'ok', PARTIAL:'warn', UNPAID:'bad', CANCELLED:'g' }[b.PayStatus] || 'g';
+  let h = `<span class="b ${m}">${b.PayStatus}</span>`;
+  if (b.CreditAllowed === 'Y' && b.CustDue > 0.009) h += ` <span class="b ${b.CreditDue && b.CreditDue < D().today ? 'bad' : 'info'}">CREDIT</span>`;
+  if (b.InsDue > 0.009) h += ' <span class="b info">INS DUE</span>';
+  return h;
+}
+const typeB = t => t === 'BS' ? '<span class="b warn">BODYSHOP</span>' : '<span class="b g">GR</span>';
+const reconB = s => s === 'RECONCILED' ? '<span class="b ok">BANK ✓</span>' : s === 'PENDING' ? '<span class="b warn">BANK PENDING</span>' : '';
+const tallyB = v => v ? `<span class="b ok" title="Tally voucher">T: ${esc(v)}</span>` : '';
+
+/* =================== HOME =================== */
+function vHome() {
+  const d = D(), t = d.today, inRange = t >= d.from && t <= d.to;
+  const open = d.bills.filter(b => b.Status === 'ACTIVE');
+  const custDue = sum(open, b => Math.max(0, b.CustDue)), insDue = sum(open, b => Math.max(0, b.InsDue));
+  const credit = open.filter(b => b.CreditAllowed === 'Y' && b.CustDue > 0.009), od = credit.filter(b => b.CreditDue && b.CreditDue < t);
+  const noCredit = open.filter(b => b.CreditAllowed !== 'Y' && b.CustDue > 0.009);
+  let h = '<div class="row noprint" style="margin-bottom:14px">';
+  h += `<button class="btn p" onclick="billForm()">+ New bill</button>`;
+  if (isCash()) h += `<button class="btn" onclick="pickBill()">Receive payment</button><button class="btn" onclick="advForm()">+ Advance</button><button class="btn" onclick="expForm()">+ Expense</button><button class="btn" onclick="contraForm()">Cash deposit / transfer</button>`;
+  h += '</div>';
+  if (role() !== 'ADVISOR') {
+    const tl = d.receipts.filter(l => l.Status === 'ACTIVE' && l.RcptDate === t), ta = (d.advances || []).filter(v => v.Status === 'ACTIVE' && v.AdvDate === t);
+    const tp = (d.payments || []).filter(p => p.Status === 'ACTIVE' && p.PayDate === t);
+    const coll = sum(tl.filter(l => MONEY.includes(l.Mode)), l => l.Amount) + sum(ta, v => v.Amount);
+    const dc = (d.dayclose || []).find(x => x.CloseDate === t);
+    const dst = dc ? dc.Status : 'OPEN';
+    h += `<div class="grid">
+      <div class="card kpi"><div class="l">Cash in hand (book)</div><div class="v">${inr(d.cashNow)}</div><div class="s">Today: in ${inr(d.todayFig.CashIn)} · out ${inr(d.todayFig.CashOut)}</div></div>
+      <div class="card kpi green"><div class="l">Collected today (all modes)</div><div class="v">${inRange ? inr(coll) : '—'}</div><div class="s">${tl.length} bill lines · ${ta.length} advances</div></div>
+      <div class="card kpi"><div class="l">Expenses today</div><div class="v">${inRange ? inr(sum(tp, p => p.Amount)) : '—'}</div><div class="s">${tp.length} entries</div></div>
+      <div class="card kpi ${dst === 'OPEN' || dst === 'REOPENED' ? 'red' : 'green'}"><div class="l">Today's cash book</div><div class="v" style="font-size:18px">${dst}</div><div class="s">${isCash() && (dst === 'OPEN' || dst === 'REOPENED') ? `<button class="btn s p" onclick="dayForm('${t}')">Close today</button>` : dc ? 'Diff ' + inr(dc.Diff) : ''}</div></div>
+    </div>`;
+    if (inRange) {
+      const src = [['GR', l => l.BillType === 'GR'], ['BS · Customer', l => l.BillType === 'BS' && l.Payer === 'CUSTOMER'], ['BS · Insurance', l => l.Payer === 'INSURANCE']];
+      h += `<h4>Today's collection by mode</h4><div class="tw"><table><thead><tr><th>Mode</th>${src.map(s => `<th class="n">${s[0]}</th>`).join('')}<th class="n">Advances</th><th class="n">Total</th></tr></thead><tbody>`;
+      const cols = Array(5).fill(0);
+      MONEY.concat(['TDS', 'ADV_ADJ', 'WRITEOFF']).forEach(m => {
+        const v = src.map(s => sum(tl.filter(l => l.Mode === m && s[1](l)), l => l.Amount)), av = MONEY.includes(m) ? sum(ta.filter(x => x.Mode === m), x => x.Amount) : 0, tot = r2(v.reduce((a, b) => a + b, 0) + av);
+        if (!tot) return; if (MONEY.includes(m)) { v.forEach((x, i) => cols[i] += x); cols[3] += av; cols[4] += tot; }
+        h += `<tr${MONEY.includes(m) ? '' : ' class="mut"'}><td>${ML[m]}${MONEY.includes(m) ? '' : ' <span class="sm">(non-cash settlement)</span>'}</td>${v.map(x => `<td class="n">${x ? amt(x) : ''}</td>`).join('')}<td class="n">${av ? amt(av) : ''}</td><td class="n bold">${amt(tot)}</td></tr>`;
+      });
+      h += `</tbody><tfoot><tr><td>Money received</td>${cols.map(x => `<td class="n">${amt(x)}</td>`).join('')}</tr></tfoot></table></div>`;
+    } else h += '<div class="note">Today is outside the selected date range — set "To" to today to see today\'s figures.</div>';
+  }
+  h += `<h4>Receivables</h4><div class="grid">
+    <div class="card kpi red"><div class="l">Customer outstanding</div><div class="v">${inr(custDue)}</div><div class="s">${noCredit.length} bills without credit approval</div></div>
+    <div class="card kpi"><div class="l">On approved credit</div><div class="v">${inr(sum(credit, b => b.CustDue))}</div><div class="s">${credit.length} bills · <b style="color:var(--bad)">${od.length} overdue</b></div></div>
+    <div class="card kpi"><div class="l">Insurance receivable</div><div class="v">${inr(insDue)}</div><div class="s">${open.filter(b => b.InsDue > 0.009).length} claims pending</div></div>
+    ${d.advances ? `<div class="card kpi"><div class="l">Open advances (liability)</div><div class="v">${inr(sum(d.advances.filter(v => v.Balance > 0 && v.Status === 'ACTIVE'), v => v.Balance))}</div><div class="s">${d.advances.filter(v => v.Balance > 0 && v.Status === 'ACTIVE').length} parties</div></div>` : ''}
+  </div>`;
+  const ins = {}; open.filter(b => b.InsDue > 0.009).forEach(b => { const x = ins[b.Insurer] || (ins[b.Insurer] = { n: 0, a: 0, old: 0 }); x.n++; x.a += b.InsDue; x.old = Math.max(x.old, days(b.BillDate, t)); });
+  const ik = Object.keys(ins).sort((a, b) => ins[b].a - ins[a].a);
+  if (ik.length) h += `<h4>Insurance dues by company</h4><div class="tw"><table><thead><tr><th>Insurer</th><th class="n">Claims</th><th class="n">Due</th><th class="n">Oldest (days)</th></tr></thead><tbody>${ik.map(k => `<tr class="click" onclick="S.bf={q:${esc(JSON.stringify(k))},type:'',st:'ins'};go('bills')"><td>${esc(k)}</td><td class="n">${ins[k].n}</td><td class="n">${amt(ins[k].a)}</td><td class="n">${ins[k].old}</td></tr>`).join('')}</tbody></table></div>`;
+  if (isAcc() && d.advances) {
+    const pb = bankItems().filter(x => x.st === 'PENDING').length, pt = tallyItems().filter(x => !x.vch).length;
+    h += `<h4>Accounts checklist (selected range)</h4><div class="grid">
+      <div class="card kpi ${pb ? 'red' : 'green'}"><div class="l">Bank / UPI entries not reconciled</div><div class="v">${pb}</div><div class="s"><button class="btn s" onclick="S.rtab='bank';go('recon')">Open</button></div></div>
+      <div class="card kpi ${pt ? 'red' : 'green'}"><div class="l">Entries not booked in Tally</div><div class="v">${pt}</div><div class="s"><button class="btn s" onclick="S.rtab='tally';go('recon')">Open</button></div></div>
+      <div class="card kpi"><div class="l">Days closed, not verified</div><div class="v">${(d.dayclose || []).filter(x => x.Status === 'CLOSED').length}</div><div class="s"><button class="btn s" onclick="go('cash')">Open</button></div></div></div>`;
+  }
+  return h;
+}
+
+/* =================== BILLS =================== */
+function vBills() {
+  const f = S.bf;
+  return `<div class="row noprint" style="justify-content:space-between;margin-bottom:12px"><h2 style="margin:0">Bills</h2><div class="row"><button class="btn p" onclick="billForm()">+ New bill</button>${isCash() ? '<button class="btn" onclick="pickBill()">Receive payment</button>' : ''}</div></div>
+  <div class="filters"><input type="search" placeholder="Search bill no, reg no, customer, mobile, claim, insurer" value="${esc(f.q)}" oninput="S.bf.q=this.value;$('#bl').innerHTML=billList()">
+  <select onchange="S.bf.type=this.value;$('#bl').innerHTML=billList()">${opt([['', 'All types'], ['GR', 'General Repair'], ['BS', 'Bodyshop']], f.type)}</select>
+  <button class="btn" onclick="searchOld()">Search older bills…</button></div>
+  <div class="chips">${[['all', 'All'], ['due', 'Any due'], ['cust', 'Customer due'], ['ins', 'Insurance due'], ['credit', 'On credit'], ['paid', 'Paid'], ['cancelled', 'Cancelled']].map(c => `<span class="chip ${f.st === c[0] ? 'on' : ''}" onclick="S.bf.st='${c[0]}';render()">${c[1]}</span>`).join('')}</div>
+  <div id="bl">${billList()}</div>`;
+}
+function filteredBills() {
+  const f = S.bf, q = f.q.trim().toUpperCase();
+  return D().bills.filter(b => {
+    if (f.type && b.Type !== f.type) return false;
+    if (q && ![b.BillNo, b.RegNo, b.Customer, b.Mobile, b.ClaimNo, b.Insurer, b.JobCardNo, b.Advisor].some(v => String(v || '').toUpperCase().includes(q))) return false;
+    switch (f.st) {
+      case 'due': return b.Status === 'ACTIVE' && b.TotalDue > 0.009;
+      case 'cust': return b.Status === 'ACTIVE' && b.CustDue > 0.009;
+      case 'ins': return b.Status === 'ACTIVE' && b.InsDue > 0.009;
+      case 'credit': return b.Status === 'ACTIVE' && b.CreditAllowed === 'Y' && b.CustDue > 0.009;
+      case 'paid': return b.PayStatus === 'PAID';
+      case 'cancelled': return b.Status === 'CANCELLED';
+    }
+    return true;
+  }).sort((a, b) => (b.BillDate + b.BillID).localeCompare(a.BillDate + a.BillID));
+}
+function billList() {
+  const a = filteredBills();
+  if (!a.length) return '<div class="card mut">No bills match. Bills outside the date range appear here only if something is still due — use "Search older bills" for paid ones.</div>';
+  return `<div class="tw"><table><thead><tr><th>Bill no</th><th>Date</th><th>Type</th><th>Customer / Vehicle</th><th>Paid by</th><th class="n">Bill amt</th><th class="n">Cust due</th><th class="n">Ins due</th><th>Status</th></tr></thead><tbody>
+  ${a.map(b => `<tr class="click${b.Status === 'CANCELLED' ? ' rev' : ''}" onclick="openBill('${b.BillID}')"><td class="bold">${esc(b.BillNo)}</td><td>${fd(b.BillDate)}</td><td>${typeB(b.Type)}</td><td>${esc(b.Customer)}<div class="sm mut">${esc(b.RegNo)}${b.Mobile ? ' · ' + esc(b.Mobile) : ''}</div></td><td class="sm">${b.Scheme === 'CUSTOMER' ? 'Customer' : b.Scheme === 'INSURANCE' ? 'Insurance' : 'Split'}${b.Insurer ? '<div class="mut">' + esc(b.Insurer) + '</div>' : ''}</td><td class="n">${amt(b.BillAmount)}</td><td class="n">${b.CustDue > 0.009 ? amt(b.CustDue) : '–'}</td><td class="n">${b.InsDue > 0.009 ? amt(b.InsDue) : '–'}</td><td>${payBadge(b)}</td></tr>`).join('')}
+  </tbody><tfoot><tr><td colspan="5">${a.length} bills</td><td class="n">${amt(sum(a.filter(b => b.Status === 'ACTIVE'), b => b.BillAmount))}</td><td class="n">${amt(sum(a, b => Math.max(0, b.CustDue)))}</td><td class="n">${amt(sum(a, b => Math.max(0, b.InsDue)))}</td><td></td></tr></tfoot></table></div>`;
+}
+async function searchOld() {
+  const q = prompt('Search all bills (bill no, reg no, customer, mobile, claim no):', S.bf.q); if (!q) return;
+  busy(true);
+  try {
+    const r = await api('bill.search', { q });
+    const ids = new Set(D().bills.map(b => b.BillID)); r.bills.forEach(b => { if (!ids.has(b.BillID)) D().bills.push(b); });
+    const lids = new Set(D().receipts.map(l => l.LineID)); r.receipts.forEach(l => { if (!lids.has(l.LineID)) D().receipts.push(l); });
+    S.bf = { q, type: '', st: 'all' }; render(); toast(r.bills.length + ' bills found');
+  } catch (e) { toast(e.message, 1); } finally { busy(false); }
+}
+const billById = id => D().bills.find(b => b.BillID === id);
+function openBill(id) {
+  const b = billById(id); if (!b) return;
+  const ls = D().receipts.filter(l => l.BillID === id).sort((x, y) => (x.RcptDate + x.LineID).localeCompare(y.RcptDate + y.LineID));
+  const groups = {}; ls.forEach(l => (groups[l.RcptNo] = groups[l.RcptNo] || []).push(l));
+  const act = b.Status === 'ACTIVE';
+  let h = `<h3>Bill ${esc(b.BillNo)} ${typeB(b.Type)} ${payBadge(b)}</h3>
+  <div class="kv"><span>Bill date</span><span>${fd(b.BillDate)}</span><span>Customer</span><span>${esc(b.Customer)} ${b.Mobile ? '· ' + esc(b.Mobile) : ''}</span><span>Vehicle</span><span>${esc(b.RegNo)} ${b.JobCardNo ? '· Job card ' + esc(b.JobCardNo) : ''}</span>
+  ${b.Advisor ? `<span>Advisor</span><span>${esc(b.Advisor)}</span>` : ''}${b.Insurer ? `<span>Insurance</span><span>${esc(b.Insurer)} · Claim ${esc(b.ClaimNo)}</span>` : ''}
+  ${b.CreditAllowed === 'Y' ? `<span>Credit</span><span>Approved by ${esc(b.CreditBy)} · pay by ${fd(b.CreditDue)} ${esc(b.CreditNote)}</span>` : ''}
+  ${b.Remarks ? `<span>Remarks</span><span>${esc(b.Remarks)}</span>` : ''}${b.CancelReason ? `<span>Cancelled</span><span>${esc(b.CancelReason)}</span>` : ''}
+  <span>Entered</span><span class="sm">${esc(b.EnteredBy)} · ${esc(b.EnteredAt)}${b.UpdatedBy ? ' · edited ' + esc(b.UpdatedBy) + ' ' + esc(b.UpdatedAt) : ''}</span>
+  ${b.TallyVch ? `<span>Tally</span><span>${tallyB(b.TallyVch)}</span>` : ''}</div>
+  <div class="dues"><div class="card"><div class="mut sm">Bill amount</div><div class="bold" style="font-size:18px">${inr(b.BillAmount)}</div></div>
+  ${b.CustShare > 0 ? `<div class="card"><div class="mut sm">Customer share ${inr(b.CustShare)}</div><div>Paid ${inr(b.CustPaid)}</div><div class="bold" style="color:${b.CustDue > 0.009 ? 'var(--bad)' : 'var(--ok)'}">Due ${inr(b.CustDue)}</div></div>` : ''}
+  ${b.InsShare > 0 ? `<div class="card"><div class="mut sm">Insurance share ${inr(b.InsShare)}</div><div>Settled ${inr(b.InsPaid)}${b.TDS ? ' (incl. TDS ' + inr(b.TDS) + ')' : ''}</div><div class="bold" style="color:${b.InsDue > 0.009 ? 'var(--bad)' : 'var(--ok)'}">Due ${inr(b.InsDue)}</div></div>` : ''}</div>`;
+  h += '<h4>Receipts against this bill</h4>';
+  if (!ls.length) h += '<div class="mut">No receipts yet.</div>';
+  else h += `<div class="tw"><table><thead><tr><th>Receipt</th><th>Date</th><th>From</th><th>Mode</th><th>Account / Ref</th><th class="n">Amount</th><th></th></tr></thead><tbody>${Object.keys(groups).map(no => {
+    const g = groups[no], rv = g[0].Status !== 'ACTIVE';
+    return g.map((l, i) => `<tr class="${rv ? 'rev' : ''}"><td>${i ? '' : esc(no)}</td><td>${i ? '' : fd(l.RcptDate)}</td><td>${i ? '' : (l.Payer === 'INSURANCE' ? 'Insurer' : 'Customer')}</td><td>${ML[l.Mode] || l.Mode}</td><td class="sm">${esc(l.Account)} ${esc(l.RefNo)} ${reconB(l.ReconStatus)}</td><td class="n">${amt(l.Amount)}</td><td>${i ? '' : (rv ? `<span class="sm" style="text-decoration:none">Reversed: ${esc(l.RevReason)}</span>` : (isAcc() ? `<button class="btn s d" onclick="revForm('Receipts','${no}')">Reverse</button>` : '')) + tallyB(l.TallyVch)}</td></tr>`).join('') + (g[0].Remarks ? `<tr><td></td><td colspan="6" class="sm mut">${esc(g[0].Remarks)} · ${esc(g[0].EnteredBy)}</td></tr>` : '');
+  }).join('')}</tbody></table></div>`;
+  h += '<div class="foot">';
+  if (act && isCash()) {
+    if (b.CustDue > 0.009) h += `<button class="btn p" onclick="rcptForm('${id}','CUSTOMER')">Receive from customer</button>`;
+    if (b.InsDue > 0.009) h += `<button class="btn p" onclick="rcptForm('${id}','INSURANCE')">Receive from insurer</button>`;
+    if (b.CustDue > 0.009 && b.CreditAllowed !== 'Y') h += `<button class="btn" onclick="creditForm('${id}')">Mark on credit</button>`;
+  }
+  if (act && isAcc()) {
+    if (b.CreditAllowed === 'Y') h += `<button class="btn" onclick="M.keepOpen=0;post('bill.credit',{BillID:'${id}',remove:1},'Credit flag removed')">Remove credit</button>`;
+    h += `<button class="btn" onclick="billForm('${id}')">Edit bill</button>`;
+    if (!ls.some(l => l.Status === 'ACTIVE')) h += `<button class="btn d" onclick="cancelBill('${id}')">Cancel bill</button>`;
+  }
+  h += '<button class="btn" onclick="closeModal()">Close</button></div>';
+  openModal(h);
+}
+
+function billForm(id) {
+  const b = id ? billById(id) : { Type: 'GR', BillDate: D().today, Scheme: 'CUSTOMER' };
+  const ms = D().masters;
+  const h = `<h3>${id ? 'Edit bill ' + esc(b.BillNo) : 'New bill'}</h3>
+  <div class="seg"><label><input type="radio" name="Type" value="GR" ${b.Type === 'GR' ? 'checked' : ''} onchange="bsBox()"><span>General Repair</span></label><label><input type="radio" name="Type" value="BS" ${b.Type === 'BS' ? 'checked' : ''} onchange="bsBox()"><span>Bodyshop</span></label></div>
+  <div class="fg">
+  ${fld('Bill no (as in DMS)', inp('BillNo', b.BillNo, 'autocapitalize="characters"'), '', 1)}
+  ${fld('Bill date', inp('BillDate', b.BillDate, `type="date" max="${D().today}"`), '', 1)}
+  ${fld('Bill amount (incl. GST)', inp('BillAmount', b.BillAmount, 'type="number" step="0.01" min="0" inputmode="decimal" oninput="bsBox()"'), '', 1)}
+  ${fld('Customer name', inp('Customer', b.Customer), '', 1)}
+  ${fld('Mobile', inp('Mobile', b.Mobile, 'inputmode="numeric" maxlength="10"'))}
+  ${fld('Registration no', inp('RegNo', b.RegNo, 'autocapitalize="characters"'))}
+  ${fld('Job card no', inp('JobCardNo', b.JobCardNo))}
+  ${fld('Service / Bodyshop advisor', inp('Advisor', b.Advisor, 'list="advl"') + `<datalist id="advl">${opt(ms.ADVISOR)}</datalist>`)}
+  </div>
+  <div id="bsb" data-scheme="${esc(b.Scheme)}" data-ins="${esc(b.Insurer || '')}" data-claim="${esc(b.ClaimNo || '')}" data-cs="${esc(b.CustShare || '')}"></div>
+  <div class="fg" style="margin-top:10px">${fld('Remarks', inp('Remarks', b.Remarks), 'wide')}${id ? fld('Reason for edit', inp('EditReason', ''), 'wide', 1) : ''}</div>
+  ${errBox}<div class="foot"><button class="btn" onclick="${id ? `openBill('${id}')` : 'closeModal()'}">Cancel</button><button class="btn p save" onclick="saveBill('${id || ''}')">${id ? 'Save changes' : 'Save bill'}</button></div>`;
+  openModal(h); bsBox();
+}
+function bsBox() {
+  const box = $('#bsb'); if (!box) return;
+  const v = formVals('#mbody'), cur = box.querySelector('[name=Scheme]:checked');
+  const scheme = cur ? cur.value : box.dataset.scheme || 'CUSTOMER';
+  if (v.Type !== 'BS') { box.innerHTML = '<input type="hidden" name="Scheme" value="CUSTOMER">'; return; }
+  const ins = box.querySelector('[name=Insurer]') ? v.Insurer : box.dataset.ins, claim = box.querySelector('[name=ClaimNo]') ? v.ClaimNo : box.dataset.claim, cs = box.querySelector('[name=CustShare]') ? v.CustShare : box.dataset.cs;
+  const amtv = N(v.BillAmount);
+  box.innerHTML = `<h4>Who pays this bodyshop bill?</h4><div class="seg">${[['CUSTOMER', 'Customer – full'], ['SPLIT', 'Customer part + Insurance'], ['INSURANCE', 'Insurance – full']].map(x => `<label><input type="radio" name="Scheme" value="${x[0]}" ${scheme === x[0] ? 'checked' : ''} onchange="bsBox()"><span>${x[1]}</span></label>`).join('')}</div>
+  ${scheme !== 'CUSTOMER' ? `<div class="fg">${fld('Insurance company', `<input name="Insurer" list="insl" value="${esc(ins)}"><datalist id="insl">${opt(D().masters.INSURER)}</datalist>`, '', 1)}${fld('Claim no', inp('ClaimNo', claim), '', 1)}
+  ${scheme === 'SPLIT' ? fld('Customer share (dep., excess, non-covered)', inp('CustShare', cs, 'type="number" step="0.01" min="0" inputmode="decimal" oninput="$(\'#insv\').textContent=WA.inr(Math.max(0,' + amtv + '-Number(this.value||0)))"'), '', 1) + fld('Insurance share (auto)', `<div style="padding:9px 0" class="bold">₹<span id="insv">${WA.inr(Math.max(0, amtv - N(cs)))}</span></div>`) : ''}</div>` : ''}`;
+}
+function saveBill(id) {
+  const v = formVals('#mbody');
+  if (id) { v.BillID = id; post('bill.edit', v, 'Bill updated', () => openBill(id)); }
+  else post('bill.create', v, 'Bill saved', r => { if (isCash() && confirm('Bill saved. Receive payment now?')) { const b = billById(r.BillID); if (b) rcptForm(r.BillID, b.CustShare > 0 ? 'CUSTOMER' : 'INSURANCE'); } });
+}
+function cancelBill(id) { askReason('Cancel bill ' + billById(id).BillNo, 'Reason (e.g. bill cancelled in DMS)', r => post('bill.cancel', { BillID: id, reason: r }, 'Bill cancelled')); }
+function creditForm(id) {
+  const b = billById(id);
+  openModal(`<h3>Mark bill ${esc(b.BillNo)} on credit</h3><div class="note">Customer due ${inr(b.CustDue)}. The bill stays in outstanding until paid; overdue credit shows in red.</div>
+  <div class="fg">${fld('Credit approved by', inp('CreditBy', ''), '', 1)}${fld('Expected payment date', inp('CreditDue', WA.addDays(D().today, 15), 'type="date"'), '', 1)}${fld('Note (party / reason)', inp('CreditNote', ''), 'wide')}</div>
+  ${errBox}<div class="foot"><button class="btn" onclick="openBill('${id}')">Back</button><button class="btn p save" onclick="post('bill.credit',Object.assign(formVals('#mbody'),{BillID:'${id}'}),'Marked on credit',()=>openBill('${id}'))">Save</button></div>`);
+}
+function pickBill() {
+  const a = D().bills.filter(b => b.Status === 'ACTIVE' && b.TotalDue > 0.009);
+  openModal(`<h3>Receive payment — select bill</h3><div class="filters"><input type="search" id="pq" placeholder="Bill no, reg no, customer, mobile" oninput="pickList()"></div><div id="pl"></div>
+  <div class="foot"><button class="btn" onclick="closeModal()">Close</button></div>`, { pick: a });
+  pickList();
+}
+function pickList() {
+  const q = ($('#pq').value || '').trim().toUpperCase();
+  const a = M.pick.filter(b => !q || [b.BillNo, b.RegNo, b.Customer, b.Mobile, b.ClaimNo].some(v => String(v || '').toUpperCase().includes(q))).slice(0, 40);
+  $('#pl').innerHTML = a.length ? `<div class="tw"><table><tbody>${a.map(b => `<tr><td class="bold">${esc(b.BillNo)} ${typeB(b.Type)}<div class="sm mut">${fd(b.BillDate)}</div></td><td>${esc(b.Customer)}<div class="sm mut">${esc(b.RegNo)}</div></td><td class="n">${b.CustDue > 0.009 ? `<button class="btn s p" onclick="rcptForm('${b.BillID}','CUSTOMER')">Customer ${amt(b.CustDue)}</button>` : ''} ${b.InsDue > 0.009 ? `<button class="btn s p" onclick="rcptForm('${b.BillID}','INSURANCE')">Insurer ${amt(b.InsDue)}</button>` : ''}</td></tr>`).join('')}</tbody></table></div>` : '<div class="mut">No open bill found. Enter the bill first with "+ New bill".</div>';
+}
+
+/* ---------- receipt form (multi-mode) ---------- */
+function rcptForm(id, payer) {
+  const b = billById(id), due = payer === 'CUSTOMER' ? b.CustDue : b.InsDue;
+  const lines = payer === 'INSURANCE' ? [{ Mode: 'NEFT', Amount: '' }, { Mode: 'TDS', Amount: '' }] : [{ Mode: 'CASH', Amount: due }];
+  const h = `<h3>Receive from ${payer === 'INSURANCE' ? esc(b.Insurer) : 'customer'} · Bill ${esc(b.BillNo)}</h3>
+  <div class="note">${esc(b.Customer)} · ${esc(b.RegNo)} · ${payer === 'INSURANCE' ? 'Claim ' + esc(b.ClaimNo) + ' · ' : ''}<b>Due ${inr(due)}</b>${payer === 'INSURANCE' ? '<br>Enter the amount credited in bank and the TDS deducted as separate lines. Any short / disallowed amount is a write-off (Accounts only) or move it to customer share by editing the bill.' : '<br>Split one payment across modes by adding lines (e.g. part cash + part UPI).'}</div>
+  ${isAcc() ? `<div class="fg" style="margin-bottom:10px">${fld('Receipt date', inp('date', D().today, `type="date" max="${D().today}"`))}</div>` : ''}
+  <div class="lines" id="rl"></div>
+  <button class="btn s" onclick="M.lines.push({Mode:'${payer === 'INSURANCE' ? 'NEFT' : 'UPI'}',Amount:''});rLines()">+ Add another mode</button>
+  <div class="tot" id="rtot"></div>
+  <div class="fg" style="margin-top:10px">${fld('Remarks', '<input id="rrem">', 'wide')}</div>
+  ${errBox}<div class="foot"><button class="btn" onclick="openBill('${id}')">Back</button><button class="btn p save" onclick="saveRcpt()">Save receipt</button></div>`;
+  openModal(h, { bill: b, payer, due, lines });
+  rLines();
+}
+function rLines() {
+  const p = M.payer, accs = D().masters.ACCOUNT;
+  const modes = (p === 'CUSTOMER' ? ['CASH', 'UPI', 'NEFT', 'CARD', 'CHEQUE', 'ADV_ADJ'] : ['NEFT', 'CHEQUE', 'UPI', 'TDS']).concat(isAcc() ? ['WRITEOFF'] : []);
+  const advs = (D().advances || []).filter(v => v.Status === 'ACTIVE' && v.Balance > 0.009).sort((a, b) => (b.RegNo === M.bill.RegNo || b.Mobile === M.bill.Mobile) - (a.RegNo === M.bill.RegNo || a.Mobile === M.bill.Mobile));
+  $('#rl').innerHTML = M.lines.map((l, i) => {
+    const bank = BANK.includes(l.Mode);
+    let x = l.Mode === 'ADV_ADJ' ? `<select onchange="M.lines[${i}].AdvanceID=this.value">${opt(advs.map(v => [v.AdvID, v.AdvID + ' · ' + v.Party + ' · bal ' + amt(v.Balance)]), l.AdvanceID, advs.length ? 'Select advance' : 'No open advance')}</select><span></span>`
+      : bank ? `<select onchange="M.lines[${i}].Account=this.value">${opt(accs, l.Account, 'Account')}</select><input placeholder="${l.Mode === 'CHEQUE' ? 'Cheque no' : 'UTR / txn id'}" value="${esc(l.RefNo || '')}" oninput="M.lines[${i}].RefNo=this.value">`
+      : '<span></span><span></span>';
+    return `<div class="ln"><select onchange="M.lines[${i}].Mode=this.value;rLines()">${opt(modes.map(m => [m, ML[m]]), l.Mode)}</select><input type="number" step="0.01" min="0" inputmode="decimal" placeholder="Amount" value="${esc(l.Amount)}" oninput="M.lines[${i}].Amount=this.value;rTot()">${x}<button class="btn s d del" title="Remove line" onclick="M.lines.splice(${i},1);rLines()" ${M.lines.length < 2 ? 'disabled' : ''}>×</button></div>`;
+  }).join('');
+  rTot();
+}
+function rTot() {
+  const t = sum(M.lines, l => l.Amount), left = r2(M.due - t);
+  $('#rtot').innerHTML = `<span>Total ${inr(t)}</span><span class="${left < -0.009 ? 'over' : ''}">${left < -0.009 ? 'Excess ' + inr(-left) : 'Balance after this ' + inr(left)}</span>`;
+}
+function saveRcpt() {
+  const p = { BillID: M.bill.BillID, Payer: M.payer, lines: M.lines.filter(l => N(l.Amount) > 0), Remarks: $('#rrem').value };
+  const dt = $('#mbody [name=date]'); if (dt) p.date = dt.value;
+  const id = M.bill.BillID; post('receipt.create', p, 'Receipt saved', () => openBill(id));
+}
+
+/* =================== ADVANCES =================== */
+function vAdvances() {
+  const a = (D().advances || []).slice().sort((x, y) => (y.AdvDate + y.AdvID).localeCompare(x.AdvDate + x.AdvID));
+  return `<div class="row" style="justify-content:space-between;margin-bottom:12px"><h2 style="margin:0">Advances received</h2><button class="btn p noprint" onclick="advForm()">+ New advance</button></div>
+  <div class="note">Shows advances dated in the range plus every advance that still has a balance. Adjust an advance against a bill from the bill's "Receive from customer" screen (mode: Adjust advance).</div>
+  ${a.length ? `<div class="tw"><table><thead><tr><th>Advance</th><th>Date</th><th>Party</th><th>Purpose</th><th>Mode</th><th class="n">Amount</th><th class="n">Adjusted</th><th class="n">Refunded</th><th class="n">Balance</th><th>Status</th><th></th></tr></thead><tbody>
+  ${a.map(v => `<tr class="${v.Status !== 'ACTIVE' ? 'rev' : ''}"><td class="bold">${esc(v.AdvID)}</td><td>${fd(v.AdvDate)}</td><td>${esc(v.Party)}<div class="sm mut">${esc(v.RegNo)} ${esc(v.Mobile)}</div></td><td>${esc(v.Purpose)}</td><td>${ML[v.Mode]}<div class="sm mut">${esc(v.Account)} ${esc(v.RefNo)}</div>${reconB(v.ReconStatus)}</td><td class="n">${amt(v.Amount)}</td><td class="n">${v.Adjusted ? amt(v.Adjusted) : ''}</td><td class="n">${v.Refunded ? amt(v.Refunded) : ''}</td><td class="n bold">${amt(v.Balance)}</td><td><span class="b ${{ OPEN: 'warn', PART: 'info', CLOSED: 'ok', REVERSED: 'g' }[v.AdvStatus]}">${v.AdvStatus}</span> ${tallyB(v.TallyVch)}</td>
+  <td class="noprint">${v.Status === 'ACTIVE' && v.Balance > 0.009 && isCash() ? `<button class="btn s" onclick="refundForm('${v.AdvID}')">Refund</button> ` : ''}${v.Status === 'ACTIVE' && isAcc() && !v.Adjusted && !v.Refunded ? `<button class="btn s d" onclick="revForm('Advances','${v.AdvID}')">Reverse</button>` : ''}${v.RevReason ? `<span class="sm">${esc(v.RevReason)}</span>` : ''}</td></tr>`).join('')}
+  </tbody><tfoot><tr><td colspan="5">${a.length} advances</td><td class="n">${amt(sum(a.filter(v => v.Status === 'ACTIVE'), v => v.Amount))}</td><td class="n">${amt(sum(a, v => v.Adjusted))}</td><td class="n">${amt(sum(a, v => v.Refunded))}</td><td class="n">${amt(sum(a.filter(v => v.Status === 'ACTIVE'), v => v.Balance))}</td><td colspan="2"></td></tr></tfoot></table></div>` : '<div class="card mut">No advances.</div>'}`;
+}
+function moneyFields(mode, acc, ref, onchange) {
+  const bank = mode && mode !== 'CASH';
+  return fld('Mode', `<select name="Mode" onchange="${onchange || 'modeToggle()'}">${opt(MONEY.map(m => [m, ML[m]]), mode || 'CASH')}</select>`, '', 1)
+    + fld('Bank / UPI / POS account', `<select name="Account">${opt(D().masters.ACCOUNT, acc, 'Select')}</select>`, 'bankonly' + (bank ? '' : ' hidden'), 1)
+    + fld('UTR / txn id / cheque no', inp('RefNo', ref), 'bankonly' + (bank ? '' : ' hidden'), 1);
+}
+function modeToggle() { const m = $('#mbody [name=Mode]').value; document.querySelectorAll('#mbody .bankonly').forEach(e => e.classList.toggle('hidden', m === 'CASH')); }
+const dateFld = () => isAcc() ? fld('Entry date', inp('date', D().today, `type="date" max="${D().today}"`)) : '';
+function advForm() {
+  openModal(`<h3>Advance received</h3><div class="fg">
+  ${fld('Received from', inp('Party', ''), '', 1)}${fld('Mobile', inp('Mobile', '', 'inputmode="numeric" maxlength="10"'))}${fld('Reg no', inp('RegNo', ''))}
+  ${fld('Purpose', `<select name="Purpose">${opt(D().masters.ADV_PURPOSE, '', 'Select')}</select>`, '', 1)}${fld('Amount', inp('Amount', '', 'type="number" step="0.01" min="0" inputmode="decimal"'), '', 1)}
+  ${moneyFields('CASH')}${dateFld()}${fld('Remarks', inp('Remarks', ''), 'wide')}</div>
+  ${errBox}<div class="foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn p save" onclick="post('advance.create',formVals('#mbody'),'Advance saved')">Save advance</button></div>`);
+}
+function refundForm(id) {
+  const v = D().advances.find(x => x.AdvID === id);
+  openModal(`<h3>Refund advance ${esc(id)}</h3><div class="note">${esc(v.Party)} · balance ${inr(v.Balance)}</div><div class="fg">
+  ${fld('Refund amount', inp('Amount', v.Balance, 'type="number" step="0.01" min="0"'), '', 1)}${moneyFields('CASH')}${fld('Approved by', inp('ApprovedBy', ''))}${dateFld()}${fld('Remarks', inp('Remarks', ''), 'wide')}</div>
+  ${errBox}<div class="foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn p save" onclick="post('payment.create',Object.assign(formVals('#mbody'),{LinkID:'${id}',Payee:${esc(JSON.stringify(v.Party))}}),'Refund saved')">Save refund</button></div>`);
+}
+
+/* =================== EXPENSES =================== */
+function vExpenses() {
+  const all = (D().payments || []).slice().sort((x, y) => (y.PayDate + y.PayID).localeCompare(x.PayDate + x.PayID));
+  const act = all.filter(p => p.Status === 'ACTIVE'), grps = {}, leds = {};
+  act.forEach(p => { const g = p.ExpGroup || '(no group)'; grps[g] = r2((grps[g] || 0) + N(p.Amount)); if (g === S.ef.grp) leds[p.Category] = r2((leds[p.Category] || 0) + N(p.Amount)); });
+  const a = all.filter(p => (!S.ef.grp || (p.ExpGroup || '(no group)') === S.ef.grp) && (!S.ef.cat || p.Category === S.ef.cat));
+  const chip = (on, js, label) => `<span class="chip ${on ? 'on' : ''}" onclick="${js};render()">${label}</span>`;
+  return `<div class="row" style="justify-content:space-between;margin-bottom:12px"><h2 style="margin:0">Expenses &amp; payments</h2><button class="btn p noprint" onclick="expForm()">+ New expense</button></div>
+  <div class="chips">${chip(!S.ef.grp, "S.ef.grp='';S.ef.cat=''", 'All groups · ' + inr(sum(act, p => p.Amount)))}${Object.keys(grps).sort((x, y) => grps[y] - grps[x]).map(g => chip(S.ef.grp === g, `S.ef.grp=${esc(JSON.stringify(g))};S.ef.cat=''`, esc(g) + ' · ' + inr(grps[g]))).join('')}</div>
+  ${S.ef.grp ? `<div class="chips" style="margin-top:-6px"><span class="mut sm" style="align-self:center">Ledger:</span>${chip(!S.ef.cat, "S.ef.cat=''", 'All')}${Object.keys(leds).sort((x, y) => leds[y] - leds[x]).map(c => chip(S.ef.cat === c, `S.ef.cat=${esc(JSON.stringify(c))}`, esc(c) + ' · ' + inr(leds[c]))).join('')}</div>` : ''}
+  ${a.length ? `<div class="tw"><table><thead><tr><th>Voucher</th><th>Date</th><th>Account group › Ledger</th><th>Paid to</th><th>Narration</th><th>Mode</th><th>Bill</th><th>Approved</th><th class="n">Amount</th><th></th></tr></thead><tbody>
+  ${a.map(p => `<tr class="${p.Status !== 'ACTIVE' ? 'rev' : ''}"><td class="bold">${esc(p.PayID)}</td><td>${fd(p.PayDate)}</td><td><div class="sm mut">${esc(p.ExpGroup)}</div>${esc(p.Category)}${p.LinkID ? ' <span class="sm mut">' + esc(p.LinkID) + '</span>' : ''}</td><td>${esc(p.Payee)}</td><td style="white-space:normal;min-width:220px">${esc(p.Narration)}${p.Remarks ? '<div class="sm mut">' + esc(p.Remarks) + '</div>' : ''}</td><td>${ML[p.Mode]}<div class="sm mut">${esc(p.Account)} ${esc(p.RefNo)}</div>${reconB(p.ReconStatus)}</td><td>${p.HasBill === 'Y' ? '<span class="b ok">BILL</span> ' + esc(p.SupplierBillNo) : '<span class="b bad">NO BILL</span>'}</td><td class="sm">${esc(p.ApprovedBy)}</td><td class="n">${amt(p.Amount)}</td><td class="noprint">${tallyB(p.TallyVch)} ${p.Status === 'ACTIVE' && isAcc() ? `<button class="btn s d" onclick="revForm('Payments','${p.PayID}')">Reverse</button>` : esc(p.RevReason)}</td></tr>`).join('')}
+  </tbody><tfoot><tr><td colspan="8">${a.length} entries</td><td class="n">${amt(sum(a.filter(p => p.Status === 'ACTIVE'), p => p.Amount))}</td><td></td></tr></tfoot></table></div>` : '<div class="card mut">No expenses in this range.</div>'}`;
+}
+function expForm() {
+  const st = D().settings, groups = Object.keys(D().masters.EXP_MAP || {});
+  openModal(`<h3>New expense / payment</h3><div class="fg">
+  ${fld('Account group (header)', `<select name="ExpGroup" onchange="expGrp()">${opt(groups, '', 'Select group')}</select>`, '', 1)}
+  ${fld('Expense ledger', `<select name="Category" onchange="expAuto()" disabled><option value="">Select group first</option></select>`, '', 1)}
+  ${fld('Amount', inp('Amount', '', 'type="number" step="0.01" min="0" inputmode="decimal"'), '', 1)}
+  ${fld('Paid to', inp('Payee', '', 'oninput="expAuto()"'), '', 1)}
+  ${fld('Narration <span class="mut">(goes into Tally — say what it was for)</span>', '<textarea name="Narration" rows="2" placeholder="e.g. Being amount paid to Gupta Radiator Works towards radiator repair of HR34A0091, job card 4412" oninput="M.narrTouched=this.value.trim()!==\'\'"></textarea>', 'wide', 1)}
+  ${moneyFields('CASH')}
+  ${fld('Supplier bill / voucher no', inp('SupplierBillNo', '', 'oninput="expAuto()"'))}${fld('Bill / receipt attached?', `<select name="HasBill">${opt([['Y', 'Yes – bill kept'], ['N', 'No bill']], 'Y')}</select>`)}
+  ${fld('Approved by' + ` <span class="mut">(needed above ₹${WA.inr(st.EXP_APPROVAL_LIMIT)})</span>`, inp('ApprovedBy', ''))}${dateFld()}${fld('Remarks (internal)', inp('Remarks', ''), 'wide')}</div>
+  <div class="note sm">Cash payments above ₹${WA.inr(st.CASH_EXP_LIMIT)} to one party in a day are blocked for cashier (Income-tax Sec 40A(3)) — pay by bank. Groups and ledgers are managed by the Owner in Settings.</div>
+  ${errBox}<div class="foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn p save" onclick="post('payment.create',formVals('#mbody'),'Expense saved')">Save expense</button></div>`);
+}
+function expGrp() {
+  const g = $('#mbody [name=ExpGroup]').value, sel = $('#mbody [name=Category]'), list = (D().masters.EXP_MAP || {})[g] || [];
+  sel.innerHTML = g ? opt(list, '', list.length ? 'Select ledger' : 'No ledger in this group') : '<option value="">Select group first</option>';
+  sel.disabled = !g; if (list.length === 1) sel.value = list[0];
+  expAuto();
+}
+function expAuto() {
+  if (M.narrTouched) return;
+  const v = formVals('#mbody'), ta = $('#mbody [name=Narration]');
+  if (!v.Category && !v.Payee) { ta.value = ''; return; }
+  ta.value = 'Being amount paid' + (v.Payee ? ' to ' + v.Payee : '') + (v.Category ? ' towards ' + v.Category : '') + (v.SupplierBillNo ? ' vide bill no ' + v.SupplierBillNo : '');
+}
+
+/* =================== CASH BOOK =================== */
+function vCash() {
+  const d = D(), cb = d.cashbook; let bal = cb.opening, h = '';
+  const byDay = {}; cb.moves.forEach(m => (byDay[m.date] = byDay[m.date] || []).push(m));
+  const dcs = {}; (d.dayclose || []).forEach(x => dcs[x.CloseDate] = x);
+  const allDays = Object.keys(Object.assign({}, byDay, dcs)).filter(x => x >= d.from && x <= d.to).sort();
+  const tin = sum(cb.moves.filter(m => m.amt > 0), m => m.amt), tout = -sum(cb.moves.filter(m => m.amt < 0), m => m.amt);
+  h += `<div class="row" style="justify-content:space-between;margin-bottom:12px"><h2 style="margin:0">Cash book</h2><div class="row noprint">${isCash() ? `<button class="btn" onclick="contraForm()">Cash deposit / transfer</button><button class="btn p" onclick="dayForm('${d.today}')">Close day</button>` : ''}<button class="btn" onclick="window.print()">Print</button></div></div>
+  <div class="printhead"><b>${esc(d.settings.WORKSHOP_NAME)} — Cash Book</b> · ${fd(d.from)} to ${fd(d.to)}</div>
+  <div class="grid" style="margin-bottom:14px"><div class="card kpi"><div class="l">Opening ${fd(d.from)}</div><div class="v">${inr(cb.opening)}</div></div><div class="card kpi green"><div class="l">Cash in</div><div class="v">${inr(tin)}</div></div><div class="card kpi red"><div class="l">Cash out</div><div class="v">${inr(tout)}</div></div><div class="card kpi"><div class="l">Closing ${fd(d.to)}</div><div class="v">${inr(cb.opening + tin - tout)}</div></div></div>
+  <div class="tw"><table><thead><tr><th>Date</th><th>Voucher</th><th>Type</th><th>Particulars</th><th class="n">Receipt</th><th class="n">Payment</th><th class="n">Balance</th></tr></thead><tbody>
+  <tr class="sub"><td>${fd(d.from)}</td><td colspan="5">Opening balance</td><td class="n">${amt(bal)}</td></tr>`;
+  allDays.forEach(day => {
+    const mv = byDay[day] || [];
+    mv.forEach(m => { bal = r2(bal + m.amt); h += `<tr><td>${fd(m.date)}</td><td>${esc(m.id)}</td><td class="sm">${esc(m.kind)}</td><td>${esc(m.narr)}</td><td class="n">${m.amt > 0 ? amt(m.amt) : ''}</td><td class="n">${m.amt < 0 ? amt(-m.amt) : ''}</td><td class="n">${amt(bal)}</td></tr>`; });
+    const dc = dcs[day];
+    h += `<tr class="sub"><td>${fd(day)}</td><td colspan="3">Day closing ${dc ? `<span class="b ${dc.Status === 'VERIFIED' ? 'ok' : dc.Status === 'CLOSED' ? 'info' : 'warn'}">${dc.Status}</span> counted ${inr(dc.Counted)}${Math.abs(N(dc.Diff)) > 0.009 ? ` <span class="b bad">DIFF ${amt(dc.Diff)}</span>` : ''}${dc.Status !== 'REOPENED' && Math.abs(N(dc.Expected) - bal) > 0.009 ? ' <span class="b bad">CHANGED AFTER CLOSE</span>' : ''}` : '<span class="b warn">NOT CLOSED</span>'}</td><td class="n">${amt(sum(mv.filter(m => m.amt > 0), m => m.amt))}</td><td class="n">${amt(-sum(mv.filter(m => m.amt < 0), m => m.amt))}</td><td class="n">${amt(bal)}</td></tr>`;
+  });
+  h += '</tbody></table></div>';
+  const dl = Object.values(dcs).sort((a, b) => b.CloseDate.localeCompare(a.CloseDate));
+  if (dl.length) h += `<h4>Day closings</h4><div class="tw"><table><thead><tr><th>Date</th><th class="n">Opening</th><th class="n">In</th><th class="n">Out</th><th class="n">Book</th><th class="n">Counted</th><th class="n">Diff</th><th>Status</th><th>By</th><th class="noprint"></th></tr></thead><tbody>${dl.map(x => `<tr><td>${fd(x.CloseDate)}</td><td class="n">${amt(x.Opening)}</td><td class="n">${amt(x.CashIn)}</td><td class="n">${amt(x.CashOut)}</td><td class="n">${amt(x.Expected)}</td><td class="n">${amt(x.Counted)}</td><td class="n" style="color:${Math.abs(N(x.Diff)) > 0.009 ? 'var(--bad)' : ''}">${amt(x.Diff)}</td><td><span class="b ${x.Status === 'VERIFIED' ? 'ok' : x.Status === 'CLOSED' ? 'info' : 'warn'}">${x.Status}</span></td><td class="sm">${esc(x.ClosedBy)}${x.VerifiedBy ? ' / ✓ ' + esc(x.VerifiedBy) : ''}${x.ReopenedBy ? '<div class="mut">Reopened: ' + esc(x.ReopenedBy) + '</div>' : ''}${x.Remarks ? '<div class="mut">' + esc(x.Remarks) + '</div>' : ''}</td>
+  <td class="noprint">${x.Status === 'CLOSED' && isAcc() ? `<button class="btn s p" onclick="M={ref:uid()};post('day.verify',{date:'${x.CloseDate}'},'Day verified & locked')">Verify</button> ` : ''}${(x.Status === 'CLOSED' && isAcc()) || (x.Status === 'VERIFIED' && isOwner()) ? `<button class="btn s" onclick="askReason('Reopen ${x.CloseDate}','Reason for reopening',r=>post('day.reopen',{date:'${x.CloseDate}',reason:r},'Day reopened'))">Reopen</button>` : ''}${x.Status === 'REOPENED' && isCash() ? `<button class="btn s p" onclick="dayForm('${x.CloseDate}')">Close again</button>` : ''}</td></tr>`).join('')}</tbody></table></div>`;
+  const ct = (d.contra || []).slice().sort((a, b) => b.ContraID.localeCompare(a.ContraID));
+  if (ct.length) h += `<h4>Cash deposits &amp; transfers</h4><div class="tw"><table><thead><tr><th>Voucher</th><th>Date</th><th>Type</th><th>Account / ref</th><th>Remarks</th><th class="n">Amount</th><th class="noprint"></th></tr></thead><tbody>${ct.map(c => `<tr class="${c.Status !== 'ACTIVE' ? 'rev' : ''}"><td>${esc(c.ContraID)}</td><td>${fd(c.CDate)}</td><td>${esc(WA.CONTRA_LBL[c.CType])}</td><td>${esc(c.Account)} ${esc(c.RefNo)} ${reconB(c.ReconStatus)}</td><td class="sm">${esc(c.Remarks)}</td><td class="n">${amt(c.Amount)}</td><td class="noprint">${tallyB(c.TallyVch)} ${c.Status === 'ACTIVE' && isAcc() ? `<button class="btn s d" onclick="revForm('Contra','${c.ContraID}')">Reverse</button>` : esc(c.RevReason)}</td></tr>`).join('')}</tbody></table></div>`;
+  return h;
+}
+function contraForm() {
+  openModal(`<h3>Cash deposit / transfer</h3><div class="fg">
+  ${fld('Type', `<select name="CType" onchange="ctToggle()">${opt(Object.keys(WA.CONTRA_LBL).map(k => [k, WA.CONTRA_LBL[k]]), 'CASH_TO_BANK')}</select>`, 'wide', 1)}
+  ${fld('Amount', inp('Amount', '', 'type="number" step="0.01" min="0" inputmode="decimal"'), '', 1)}
+  ${fld('Bank account', `<select name="Account">${opt(D().masters.ACCOUNT, '', 'Select')}</select>`, 'bankonly', 1)}${fld('Deposit slip / cheque / txn no', inp('RefNo', ''), 'bankonly', 1)}
+  ${fld('Remarks (who carried / received cash)', inp('Remarks', ''), 'wide')}${dateFld()}</div>
+  <div class="note sm">Cash in hand now: <b>${inr(D().cashNow)}</b></div>
+  ${errBox}<div class="foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn p save" onclick="post('contra.create',formVals('#mbody'),'Saved')">Save</button></div>`);
+}
+function ctToggle() { const t = $('#mbody [name=CType]').value, b = t === 'CASH_TO_BANK' || t === 'BANK_TO_CASH'; document.querySelectorAll('#mbody .bankonly').forEach(e => e.classList.toggle('hidden', !b)); }
+async function dayForm(date) {
+  let f; busy(true);
+  try { f = await api('day.figures', { date }); } catch (e) { toast(e.message, 1); return; } finally { busy(false); }
+  const den = [500, 200, 100, 50, 20, 10];
+  openModal(`<h3>Close cash book · ${fd(date)}</h3>
+  <div class="grid"><div class="card kpi"><div class="l">Opening</div><div class="v" style="font-size:18px">${inr(f.Opening)}</div></div><div class="card kpi green"><div class="l">Cash in</div><div class="v" style="font-size:18px">${inr(f.CashIn)}</div></div><div class="card kpi red"><div class="l">Cash out</div><div class="v" style="font-size:18px">${inr(f.CashOut)}</div></div><div class="card kpi"><div class="l">Should be in hand</div><div class="v" style="font-size:18px">${inr(f.Expected)}</div></div></div>
+  <h4>Count the cash (number of notes)</h4><div class="den">${den.map(v => fld('₹' + v + ' ×', `<input name="d${v}" type="number" min="0" step="1" inputmode="numeric" oninput="denTot(${f.Expected})">`)).join('')}${fld('Coins / others (₹)', '<input name="dcoins" type="number" min="0" step="1" inputmode="decimal" oninput="denTot(' + f.Expected + ')">')}</div>
+  <div class="tot" id="dtot"></div>
+  <div class="fg" style="margin-top:10px">${fld('Remarks (required if there is a difference)', inp('Remarks', ''), 'wide')}</div>
+  <div class="note sm">After closing, no cash entry can be posted for this date. Accounts verifies and locks it.</div>
+  ${errBox}<div class="foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn p save" onclick="saveDay('${date}')">Close day</button></div>`);
+  denTot(f.Expected);
+}
+function denVals() { const v = formVals('#mbody'), o = {}; [500, 200, 100, 50, 20, 10].forEach(k => o[k] = parseInt(v['d' + k], 10) || 0); o.coins = N(v.dcoins); return o; }
+function denTot(exp) { const o = denVals(); const c = r2([500, 200, 100, 50, 20, 10].reduce((t, k) => t + k * o[k], 0) + o.coins), df = r2(c - exp); $('#dtot').innerHTML = `<span>Counted ${inr(c)}</span><span class="${Math.abs(df) > 0.009 ? 'over' : ''}">${Math.abs(df) > 0.009 ? (df > 0 ? 'Excess ' : 'Short ') + inr(Math.abs(df)) : 'Matches ✓'}</span>`; }
+function saveDay(date) { post('day.close', { date, denoms: denVals(), Remarks: $('#mbody [name=Remarks]').value }, 'Day closed'); }
+
+/* =================== REVERSAL / REASON =================== */
+function askReason(title, label, cb) {
+  openModal(`<h3>${esc(title)}</h3><div class="fg">${fld(label, '<textarea name="reason" rows="3"></textarea>', 'wide', 1)}</div>${errBox}
+  <div class="foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn p save" id="rsok">Confirm</button></div>`);
+  $('#rsok').onclick = () => { const r = $('#mbody [name=reason]').value.trim(); if (r.length < 4) return showErr('Enter a proper reason.'); cb(r); };
+}
+function revForm(table, id) { askReason('Reverse ' + id, 'Why is this entry being reversed? (nothing is deleted — the entry stays visible as reversed)', r => post('reverse', { table, id, reason: r }, 'Reversed')); }
+
+/* =================== RECONCILE =================== */
+function bankItems() {
+  const d = D(), inR = x => x >= d.from && x <= d.to, out = [];
+  d.receipts.forEach(l => { if (l.Status === 'ACTIVE' && BANK.includes(l.Mode) && inR(l.RcptDate)) out.push({ table: 'Receipts', id: l.LineID, date: l.RcptDate, kind: l.Payer === 'INSURANCE' ? 'Insurance receipt' : 'Customer receipt', vno: l.RcptNo, party: l.Party + ' · Bill ' + l.BillNo, mode: l.Mode, acc: l.Account, ref: l.RefNo, inA: N(l.Amount), outA: 0, st: l.ReconStatus, rd: l.ReconDate }); });
+  (d.advances || []).forEach(v => { if (v.Status === 'ACTIVE' && BANK.includes(v.Mode) && inR(v.AdvDate)) out.push({ table: 'Advances', id: v.AdvID, date: v.AdvDate, kind: 'Advance', vno: v.AdvID, party: v.Party, mode: v.Mode, acc: v.Account, ref: v.RefNo, inA: N(v.Amount), outA: 0, st: v.ReconStatus, rd: v.ReconDate }); });
+  (d.payments || []).forEach(p => { if (p.Status === 'ACTIVE' && BANK.includes(p.Mode)) out.push({ table: 'Payments', id: p.PayID, date: p.PayDate, kind: p.Category, vno: p.PayID, party: p.Payee, mode: p.Mode, acc: p.Account, ref: p.RefNo, inA: 0, outA: N(p.Amount), st: p.ReconStatus, rd: p.ReconDate }); });
+  (d.contra || []).forEach(c => { if (c.Status === 'ACTIVE' && c.ReconStatus) out.push({ table: 'Contra', id: c.ContraID, date: c.CDate, kind: WA.CONTRA_LBL[c.CType], vno: c.ContraID, party: c.Remarks, mode: 'CONTRA', acc: c.Account, ref: c.RefNo, inA: c.CType === 'CASH_TO_BANK' ? N(c.Amount) : 0, outA: c.CType === 'BANK_TO_CASH' ? N(c.Amount) : 0, st: c.ReconStatus, rd: c.ReconDate }); });
+  return out.sort((a, b) => (a.date + a.vno).localeCompare(b.date + b.vno));
+}
+function tallyItems() {
+  const d = D(), inR = x => x >= d.from && x <= d.to, out = [];
+  d.bills.forEach(b => { if (b.Status === 'ACTIVE' && inR(b.BillDate)) out.push({ items: [{ table: 'Bills', id: b.BillID }], date: b.BillDate, vt: 'Sales bill (' + b.Type + ')', no: b.BillNo, party: b.Customer + (b.Insurer ? ' / ' + b.Insurer : ''), det: b.Scheme === 'SPLIT' ? 'Cust ' + amt(b.CustShare) + ' · Ins ' + amt(b.InsShare) : '', a: b.BillAmount, vch: b.TallyVch }); });
+  const g = {}; d.receipts.forEach(l => { if (l.Status === 'ACTIVE' && inR(l.RcptDate)) (g[l.RcptNo] = g[l.RcptNo] || []).push(l); });
+  Object.keys(g).forEach(k => { const ls = g[k]; out.push({ items: ls.map(l => ({ table: 'Receipts', id: l.LineID })), date: ls[0].RcptDate, vt: 'Receipt', no: k, party: ls[0].Party + ' · Bill ' + ls[0].BillNo, det: ls.map(l => ML[l.Mode] + ' ' + amt(l.Amount)).join(', '), a: sum(ls, l => l.Amount), vch: ls.every(l => l.TallyVch) ? ls[0].TallyVch : '' }); });
+  (d.advances || []).forEach(v => { if (v.Status === 'ACTIVE' && inR(v.AdvDate)) out.push({ items: [{ table: 'Advances', id: v.AdvID }], date: v.AdvDate, vt: 'Receipt (advance)', no: v.AdvID, party: v.Party, det: ML[v.Mode] + ' · ' + v.Purpose, a: v.Amount, vch: v.TallyVch }); });
+  (d.payments || []).forEach(p => { if (p.Status === 'ACTIVE') out.push({ items: [{ table: 'Payments', id: p.PayID }], date: p.PayDate, vt: 'Payment', no: p.PayID, party: p.Payee, det: (p.ExpGroup ? p.ExpGroup + ' › ' : '') + p.Category + ' · ' + ML[p.Mode] + (p.Narration ? ' — ' + p.Narration : ''), a: N(p.Amount), vch: p.TallyVch }); });
+  (d.contra || []).forEach(c => { if (c.Status === 'ACTIVE') out.push({ items: [{ table: 'Contra', id: c.ContraID }], date: c.CDate, vt: 'Contra', no: c.ContraID, party: WA.CONTRA_LBL[c.CType], det: c.Account, a: N(c.Amount), vch: c.TallyVch }); });
+  return out.sort((a, b) => (a.date + a.no).localeCompare(b.date + b.no));
+}
+function vRecon() {
+  const h = `<h2>Reconcile</h2><div class="chips"><span class="chip ${S.rtab === 'bank' ? 'on' : ''}" onclick="S.rtab='bank';S.sel={};render()">Bank / UPI / POS</span><span class="chip ${S.rtab === 'tally' ? 'on' : ''}" onclick="S.rtab='tally';S.sel={};render()">Tally booking</span></div>`;
+  return h + (S.rtab === 'bank' ? vBank() : vTally());
+}
+function vBank() {
+  const all = bankItems(), f = S.rf, a = all.filter(x => (!f.acc || x.acc === f.acc) && (f.st === 'ALL' || x.st === f.st));
+  const accs = [...new Set(all.map(x => x.acc).filter(Boolean))];
+  return `<div class="note">Tick entries that appear in the bank / UPI settlement / POS statement, then mark them reconciled with the statement date. Anything left pending at month end needs follow-up.</div>
+  <div class="filters"><select onchange="S.rf.st=this.value;S.sel={};render()">${opt([['PENDING', 'Pending'], ['RECONCILED', 'Reconciled'], ['ALL', 'All']], f.st)}</select><select onchange="S.rf.acc=this.value;S.sel={};render()">${opt(accs, f.acc, 'All accounts')}</select>
+  <input type="date" id="rdate" value="${D().today}"><button class="btn p" onclick="markBank('RECONCILED')">Mark selected reconciled</button><button class="btn" onclick="markBank('PENDING')">Mark selected pending</button></div>
+  ${a.length ? `<div class="tw"><table><thead><tr><th><input type="checkbox" onchange="selAll(this.checked,'b')"></th><th>Date</th><th>Voucher</th><th>Type</th><th>Party</th><th>Account</th><th>Mode · Ref</th><th class="n">Into bank</th><th class="n">Out of bank</th><th>Status</th></tr></thead><tbody>
+  ${a.map((x, i) => `<tr><td><input type="checkbox" class="sb" data-i="${i}" ${S.sel[x.table + x.id] ? 'checked' : ''} onchange="S.sel['${x.table}${x.id}']=this.checked;selTot()"></td><td>${fd(x.date)}</td><td>${esc(x.vno)}</td><td class="sm">${esc(x.kind)}</td><td>${esc(x.party)}</td><td class="sm">${esc(x.acc)}</td><td class="sm">${esc(ML[x.mode] || x.mode)} · <b>${esc(x.ref)}</b></td><td class="n">${x.inA ? amt(x.inA) : ''}</td><td class="n">${x.outA ? amt(x.outA) : ''}</td><td>${reconB(x.st)} ${x.rd ? '<span class="sm mut">' + fd(x.rd) + '</span>' : ''}</td></tr>`).join('')}
+  </tbody><tfoot><tr><td colspan="7" id="selt">Selected: 0</td><td class="n">${amt(sum(a, x => x.inA))}</td><td class="n">${amt(sum(a, x => x.outA))}</td><td></td></tr></tfoot></table></div>` : '<div class="card mut">Nothing here.</div>'}`;
+}
+function selAll(on, k) { document.querySelectorAll(k === 'b' ? '.sb' : '.st').forEach(c => { c.checked = on; c.dispatchEvent(new Event('change')); }); }
+function selTot() { const a = bankItems().filter(x => S.sel[x.table + x.id]); const el = $('#selt'); if (el) el.textContent = `Selected: ${a.length} · in ${inr(sum(a, x => x.inA))} · out ${inr(sum(a, x => x.outA))}`; }
+function markBank(st) {
+  const items = bankItems().filter(x => S.sel[x.table + x.id]).map(x => ({ table: x.table, id: x.id }));
+  if (!items.length) return toast('Select entries first', 1);
+  M = { ref: uid() }; S.sel = {};
+  post('recon.mark', { items, status: st, date: $('#rdate').value }, 'Updated');
+}
+function vTally() {
+  const all = tallyItems(), f = S.rf, a = all.filter(x => f.st === 'ALL' || (f.st === 'PENDING' ? !x.vch : !!x.vch));
+  return `<div class="note">After booking a voucher in Tally, tick it here and enter the Tally voucher no. Month-end: this list should be empty for "Pending".</div>
+  <div class="filters"><select onchange="S.rf.st=this.value;S.sel={};render()">${opt([['PENDING', 'Not booked'], ['RECONCILED', 'Booked'], ['ALL', 'All']], f.st)}</select>
+  <input id="tv" placeholder="Tally voucher no"><button class="btn p" onclick="markTally(1)">Mark selected booked</button><button class="btn" onclick="markTally(0)">Clear selected</button></div>
+  ${a.length ? `<div class="tw"><table><thead><tr><th><input type="checkbox" onchange="selAll(this.checked,'t')"></th><th>Date</th><th>Voucher type</th><th>No</th><th>Party</th><th>Details</th><th class="n">Amount</th><th>Tally</th></tr></thead><tbody>
+  ${a.map(x => `<tr><td><input type="checkbox" class="st" ${S.sel['T' + x.no] ? 'checked' : ''} onchange="S.sel['T${esc(x.no)}']=this.checked"></td><td>${fd(x.date)}</td><td>${esc(x.vt)}</td><td class="bold">${esc(x.no)}</td><td>${esc(x.party)}</td><td class="sm">${esc(x.det)}</td><td class="n">${amt(x.a)}</td><td>${tallyB(x.vch)}</td></tr>`).join('')}
+  </tbody></table></div>` : '<div class="card mut">Nothing here.</div>'}`;
+}
+function markTally(on) {
+  const vch = on ? $('#tv').value.trim() : '';
+  if (on && !vch) return toast('Enter the Tally voucher no', 1);
+  const items = [].concat(...tallyItems().filter(x => S.sel['T' + x.no]).map(x => x.items));
+  if (!items.length) return toast('Select entries first', 1);
+  M = { ref: uid() }; S.sel = {};
+  post('tally.mark', { items, vch }, on ? 'Marked booked in Tally' : 'Cleared');
+}
+
+/* =================== REPORTS =================== */
+const RPTS = [
+  ['collection', 'Daily collection summary (mode-wise)'], ['bills', 'Bill register'], ['custout', 'Customer outstanding – ageing'], ['insout', 'Insurance receivable – ageing'],
+  ['tds', 'TDS register (insurance)'], ['expenses', 'Expense register'], ['advances', 'Advance register'], ['accounts', 'Bank / UPI / POS account summary'], ['receipts', 'Receipt register (all lines)'], ['reversals', 'Reversals & write-offs (control)']
+];
+function vReports() {
+  const r = buildReport(S.rpt);
+  return `<div class="filters noprint"><select onchange="S.rpt=this.value;render()" style="min-width:280px">${opt(RPTS, S.rpt)}</select><button class="btn" onclick="exportCSV()">Download CSV (Excel)</button><button class="btn" onclick="window.print()">Print</button></div>
+  <div class="printhead"><b>${esc(D().settings.WORKSHOP_NAME)}</b> — ${esc(r.title)} · ${fd(D().from)} to ${fd(D().to)} · printed ${esc(istNow())}</div>
+  <h2>${esc(r.title)} <span class="mut sm">${fd(D().from)} – ${fd(D().to)}</span></h2>${r.note ? `<div class="note noprint">${r.note}</div>` : ''}
+  ${r.sections.map(s => `${s.name ? `<h4>${esc(s.name)}</h4>` : ''}<div class="tw"><table><thead><tr>${s.head.map((h, i) => `<th class="${s.num && s.num[i] ? 'n' : ''}">${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.length ? s.rows.map(row => `<tr>${row.map((c, i) => `<td class="${s.num && s.num[i] ? 'n' : ''}">${s.num && s.num[i] && c !== '' ? amt(c) : esc(c)}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${s.head.length}" class="mut">No entries</td></tr>`}</tbody>${s.foot ? `<tfoot><tr>${s.foot.map((c, i) => `<td class="${s.num && s.num[i] ? 'n' : ''}">${s.num && s.num[i] && c !== '' ? amt(c) : esc(c)}</td>`).join('')}</tr></tfoot>` : ''}</table></div>`).join('')}`;
+}
+function colSum(rows, i) { return sum(rows, r => r[i]); }
+function withFoot(sec, label, cols) { sec.foot = sec.head.map((h, i) => i === 0 ? label : (cols.includes(i) ? colSum(sec.rows, i) : '')); return sec; }
+function bucket(a) { return a <= 30 ? 0 : a <= 60 ? 1 : a <= 90 ? 2 : 3; }
+function buildReport(k) {
+  const d = D(), t = d.today, inR = x => x >= d.from && x <= d.to;
+  const L = d.receipts.filter(l => l.Status === 'ACTIVE' && inR(l.RcptDate)), AV = (d.advances || []).filter(v => v.Status === 'ACTIVE' && inR(v.AdvDate));
+  const T = name => (RPTS.find(x => x[0] === name) || [, ''])[1];
+  if (k === 'collection') {
+    const dates = [...new Set(L.map(l => l.RcptDate).concat(AV.map(v => v.AdvDate)))].sort();
+    const cols = MONEY.concat(['TDS', 'ADV_ADJ', 'WRITEOFF']);
+    const rows = dates.map(dt => { const ls = L.filter(l => l.RcptDate === dt), av = AV.filter(v => v.AdvDate === dt); const m = cols.map(c => sum(ls.filter(l => l.Mode === c), l => l.Amount) + (MONEY.includes(c) ? sum(av.filter(v => v.Mode === c), v => v.Amount) : 0)); return [fd(dt)].concat(m, [r2(m.slice(0, 5).reduce((a, b) => a + b, 0))]); });
+    const s1 = withFoot({ name: 'Date-wise (bill receipts + advances)', head: ['Date', 'Cash', 'UPI', 'NEFT', 'Card', 'Cheque', 'TDS', 'Adv adjust', 'Write-off', 'Money received'], num: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1], rows }, 'Total', [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const src = [['General repair', l => l.BillType === 'GR'], ['Bodyshop – customer', l => l.BillType === 'BS' && l.Payer === 'CUSTOMER'], ['Bodyshop – insurance', l => l.Payer === 'INSURANCE']];
+    const r2s = src.map(s => { const ls = L.filter(s[1]); const m = cols.map(c => sum(ls.filter(l => l.Mode === c), l => l.Amount)); return [s[0]].concat(m, [r2(m.slice(0, 5).reduce((a, b) => a + b, 0))]); });
+    const am = cols.map(c => MONEY.includes(c) ? sum(AV.filter(v => v.Mode === c), v => v.Amount) : 0); r2s.push(['Advances'].concat(am, [r2(am.reduce((a, b) => a + b, 0))]));
+    const s2 = withFoot({ name: 'Source-wise (match with Tally receipt ledgers)', head: s1.head.map((h, i) => i ? h : 'Source'), num: s1.num, rows: r2s }, 'Total', [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    return { title: T(k), sections: [s1, s2], note: '"Money received" = Cash + UPI + NEFT + Card + Cheque. TDS, advance adjustment and write-off settle the bill but bring no money.' };
+  }
+  if (k === 'bills') {
+    const a = d.bills.filter(b => inR(b.BillDate)).sort((x, y) => (x.BillDate + x.BillNo).localeCompare(y.BillDate + y.BillNo));
+    return { title: T(k), sections: [withFoot({ head: ['Date', 'Bill no', 'Type', 'Customer', 'Reg no', 'Insurer / claim', 'Bill amount', 'Cust share', 'Ins share', 'Cust paid', 'Ins settled', 'TDS', 'Cust due', 'Ins due', 'Status', 'Tally'], num: [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+      rows: a.map(b => [fd(b.BillDate), b.BillNo, b.Type, b.Customer, b.RegNo, b.Insurer ? b.Insurer + ' / ' + b.ClaimNo : '', b.Status === 'CANCELLED' ? 0 : b.BillAmount, b.CustShare, b.InsShare, b.CustPaid, b.InsPaid, b.TDS, b.Status === 'CANCELLED' ? 0 : b.CustDue, b.Status === 'CANCELLED' ? 0 : b.InsDue, b.PayStatus + (b.CreditAllowed === 'Y' ? ' / CREDIT' : ''), b.TallyVch || '']) }, a.length + ' bills', [6, 7, 8, 9, 10, 11, 12, 13])] };
+  }
+  if (k === 'custout' || k === 'insout') {
+    const ins = k === 'insout', key = ins ? 'InsDue' : 'CustDue';
+    const a = d.bills.filter(b => b.Status === 'ACTIVE' && b[key] > 0.009).sort((x, y) => x.BillDate.localeCompare(y.BillDate));
+    const grp = {}; a.forEach(b => { const g = ins ? b.Insurer : (b.CreditAllowed === 'Y' ? 'On approved credit' : 'Not on credit'); const x = grp[g] || (grp[g] = [0, 0, 0, 0, 0]); x[bucket(days(b.BillDate, t))] += b[key]; x[4] += b[key]; });
+    const s1 = withFoot({ name: 'Summary', head: [ins ? 'Insurer' : 'Category', '0–30 days', '31–60', '61–90', '90+', 'Total'], num: [0, 1, 1, 1, 1, 1], rows: Object.keys(grp).sort((x, y) => grp[y][4] - grp[x][4]).map(g => [g].concat(grp[g].map(r2))) }, 'Total', [1, 2, 3, 4, 5]);
+    const s2 = withFoot({ name: 'Bill-wise', head: ins ? ['Bill date', 'Bill no', 'Insurer', 'Claim no', 'Customer', 'Reg no', 'Days', 'Ins share', 'Settled', 'Due'] : ['Bill date', 'Bill no', 'Type', 'Customer', 'Mobile', 'Reg no', 'Days', 'Credit by / due', 'Cust share', 'Paid', 'Due'],
+      num: ins ? [0, 0, 0, 0, 0, 0, 0, 1, 1, 1] : [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+      rows: a.map(b => ins ? [fd(b.BillDate), b.BillNo, b.Insurer, b.ClaimNo, b.Customer, b.RegNo, days(b.BillDate, t), b.InsShare, b.InsPaid, b.InsDue] : [fd(b.BillDate), b.BillNo, b.Type, b.Customer, b.Mobile, b.RegNo, days(b.BillDate, t), b.CreditAllowed === 'Y' ? b.CreditBy + ' / ' + fd(b.CreditDue) : '', b.CustShare, b.CustPaid, b.CustDue]) }, a.length + ' bills', ins ? [7, 8, 9] : [8, 9, 10]);
+    return { title: T(k), sections: [s1, s2], note: 'Includes every open bill, whatever its date (not just the selected range). Ageing is from bill date to today.' };
+  }
+  if (k === 'tds') {
+    const tl = L.filter(l => l.Mode === 'TDS'), g = {};
+    const rows = tl.map(l => { const b = billById(l.BillID) || {}; const net = sum(d.receipts.filter(x => x.RcptNo === l.RcptNo && MONEY.includes(x.Mode)), x => x.Amount); const ref = d.receipts.filter(x => x.RcptNo === l.RcptNo && MONEY.includes(x.Mode)).map(x => x.RefNo).join(', '); (g[l.Party] = g[l.Party] || [0, 0, 0]); g[l.Party][0]++; g[l.Party][1] += net; g[l.Party][2] += N(l.Amount); return [fd(l.RcptDate), l.RcptNo, l.Party, b.ClaimNo || '', l.BillNo, b.Customer || '', ref, net, N(l.Amount), r2(net + N(l.Amount))]; });
+    const s1 = withFoot({ name: 'Insurer-wise (match with Form 26AS / TDS certificates)', head: ['Insurer', 'Receipts', 'Net received', 'TDS', 'Gross settled'], num: [0, 0, 1, 1, 1], rows: Object.keys(g).map(k2 => [k2, g[k2][0], r2(g[k2][1]), r2(g[k2][2]), r2(g[k2][1] + g[k2][2])]) }, 'Total', [2, 3, 4]);
+    return { title: T(k), sections: [s1, withFoot({ name: 'Detail', head: ['Date', 'Receipt', 'Insurer', 'Claim no', 'Bill no', 'Customer', 'UTR', 'Net received', 'TDS', 'Gross'], num: [0, 0, 0, 0, 0, 0, 0, 1, 1, 1], rows }, tl.length + ' entries', [7, 8, 9])] };
+  }
+  if (k === 'expenses') {
+    const a = (d.payments || []).filter(p => p.Status === 'ACTIVE').sort((x, y) => (x.PayDate + x.PayID).localeCompare(y.PayDate + y.PayID)), g = {};
+    a.forEach(p => { const gn = p.ExpGroup || '(no group)', gg = g[gn] || (g[gn] = {}), x = gg[p.Category] || (gg[p.Category] = { c: 0, b: 0, n: 0, nb: 0 }); if (p.Mode === 'CASH') x.c += N(p.Amount); else x.b += N(p.Amount); x.n++; if (p.HasBill !== 'Y') x.nb++; });
+    const rows = [], tot = [0, 0, 0, 0, 0];
+    Object.keys(g).sort().forEach(gn => {
+      const st = [0, 0, 0, 0, 0];
+      Object.keys(g[gn]).sort().forEach(c => { const x = g[gn][c], v = [x.n, x.nb, r2(x.c), r2(x.b), r2(x.c + x.b)]; v.forEach((n, i) => { st[i] += n; tot[i] += n; }); rows.push([gn, c].concat(v)); });
+      rows.push([gn, '— Group total'].concat(st.map(r2)));
+    });
+    const s1 = { name: 'Account group › ledger-wise (match with Tally group summary)', head: ['Account group', 'Ledger', 'Entries', 'Without bill', 'Cash', 'Bank / UPI', 'Total'], num: [0, 0, 0, 0, 1, 1, 1], rows, foot: ['Grand total', ''].concat(tot.map(r2)) };
+    const s2 = withFoot({ name: 'Detail', head: ['Date', 'Voucher', 'Account group', 'Ledger', 'Paid to', 'Narration', 'Mode', 'Ref', 'Bill no', 'Approved by', 'Amount', 'Tally'], num: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], rows: a.map(p => [fd(p.PayDate), p.PayID, p.ExpGroup, p.Category, p.Payee, p.Narration, ML[p.Mode], [p.Account, p.RefNo].filter(Boolean).join(' '), p.HasBill === 'Y' ? (p.SupplierBillNo || 'Yes') : 'NO BILL', p.ApprovedBy, N(p.Amount), p.TallyVch || '']) }, a.length + ' entries', [10]);
+    return { title: T(k), sections: [s1, s2] };
+  }
+  if (k === 'advances') {
+    const a = (d.advances || []).filter(v => v.Status === 'ACTIVE');
+    return { title: T(k), sections: [withFoot({ head: ['Date', 'Advance', 'Party', 'Mobile', 'Purpose', 'Mode', 'Amount', 'Adjusted', 'Refunded', 'Balance', 'Days open'], num: [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0], rows: a.map(v => [fd(v.AdvDate), v.AdvID, v.Party, v.Mobile, v.Purpose, ML[v.Mode], v.Amount, v.Adjusted, v.Refunded, v.Balance, v.Balance > 0.009 ? days(v.AdvDate, t) : '']) }, a.length + ' advances', [6, 7, 8, 9])], note: 'Open balances here must match the "Advance from customers" ledger in Tally.' };
+  }
+  if (k === 'accounts') {
+    const it = bankItems(), g = {};
+    it.forEach(x => { const a = g[x.acc || '(none)'] || (g[x.acc || '(none)'] = { cr: 0, ir: 0, ad: 0, dep: 0, out: 0, pend: 0, pn: 0 }); if (x.table === 'Receipts') { if (x.kind.indexOf('Insurance') === 0) a.ir += x.inA; else a.cr += x.inA; } if (x.table === 'Advances') a.ad += x.inA; if (x.table === 'Contra') { a.dep += x.inA; a.out += x.outA; } if (x.table === 'Payments') a.out += x.outA; if (x.st === 'PENDING') { a.pend += x.inA - x.outA; a.pn++; } });
+    return { title: T(k), sections: [withFoot({ head: ['Account', 'Customer receipts', 'Insurance receipts', 'Advances', 'Cash deposited', 'Payments / withdrawals', 'Net into account', 'Unreconciled (net)', 'Unreconciled count'], num: [0, 1, 1, 1, 1, 1, 1, 1, 0], rows: Object.keys(g).map(k2 => { const a = g[k2]; return [k2, r2(a.cr), r2(a.ir), r2(a.ad), r2(a.dep), r2(a.out), r2(a.cr + a.ir + a.ad + a.dep - a.out), r2(a.pend), a.pn]; }) }, 'Total', [1, 2, 3, 4, 5, 6, 7])], note: '"Net into account" should match the bank / UPI settlement / POS statement credits less debits for the period, apart from the unreconciled items.' };
+  }
+  if (k === 'receipts') {
+    const a = L.slice().sort((x, y) => (x.RcptDate + x.LineID).localeCompare(y.RcptDate + y.LineID));
+    return { title: T(k), sections: [withFoot({ head: ['Date', 'Receipt', 'Bill no', 'Type', 'From', 'Party', 'Mode', 'Account', 'Ref', 'Amount', 'Bank', 'Tally', 'By'], num: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0], rows: a.map(l => [fd(l.RcptDate), l.RcptNo, l.BillNo, l.BillType, l.Payer === 'INSURANCE' ? 'Insurer' : 'Customer', l.Party, ML[l.Mode], l.Account, l.RefNo, N(l.Amount), l.ReconStatus, l.TallyVch || '', l.EnteredBy]) }, a.length + ' lines', [9])] };
+  }
+  if (k === 'reversals') {
+    const rows = [];
+    d.receipts.filter(l => l.Status === 'REVERSED' && inR(l.RcptDate)).forEach(l => rows.push([fd(l.RcptDate), 'Receipt', l.LineID, l.Party + ' · Bill ' + l.BillNo, ML[l.Mode], N(l.Amount), l.RevReason, l.RevBy + ' ' + l.RevAt]));
+    (d.advances || []).filter(v => v.Status === 'REVERSED' && inR(v.AdvDate)).forEach(v => rows.push([fd(v.AdvDate), 'Advance', v.AdvID, v.Party, ML[v.Mode], N(v.Amount), v.RevReason, v.RevBy + ' ' + v.RevAt]));
+    (d.payments || []).filter(p => p.Status === 'REVERSED').forEach(p => rows.push([fd(p.PayDate), 'Payment', p.PayID, p.Payee, ML[p.Mode], N(p.Amount), p.RevReason, p.RevBy + ' ' + p.RevAt]));
+    (d.contra || []).filter(c => c.Status === 'REVERSED').forEach(c => rows.push([fd(c.CDate), 'Contra', c.ContraID, WA.CONTRA_LBL[c.CType], '', N(c.Amount), c.RevReason, c.RevBy + ' ' + c.RevAt]));
+    d.bills.filter(b => b.Status === 'CANCELLED' && inR(b.BillDate)).forEach(b => rows.push([fd(b.BillDate), 'Bill cancelled', b.BillNo, b.Customer, '', b.BillAmount, b.CancelReason, b.UpdatedBy + ' ' + b.UpdatedAt]));
+    const wo = L.filter(l => l.Mode === 'WRITEOFF').map(l => [fd(l.RcptDate), l.RcptNo, l.BillNo, l.Party, N(l.Amount), l.Remarks, l.EnteredBy]);
+    return { title: T(k), sections: [withFoot({ name: 'Reversed / cancelled entries', head: ['Date', 'Type', 'Ref', 'Party', 'Mode', 'Amount', 'Reason', 'By / when'], num: [0, 0, 0, 0, 0, 1, 0, 0], rows }, rows.length + ' entries', [5]), withFoot({ name: 'Write-offs / short payments', head: ['Date', 'Receipt', 'Bill', 'Party', 'Amount', 'Reason', 'By'], num: [0, 0, 0, 0, 1, 0, 0], rows: wo }, wo.length + ' entries', [4])], note: 'Owner control report: every reversal, cancellation and write-off with the reason and the person.' };
+  }
+  return { title: '', sections: [] };
+}
+function exportCSV() {
+  const r = buildReport(S.rpt), q = v => { v = v == null ? '' : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+  let csv = q(D().settings.WORKSHOP_NAME + ' — ' + r.title + ' — ' + D().from + ' to ' + D().to) + '\n';
+  r.sections.forEach(s => { csv += '\n' + (s.name ? q(s.name) + '\n' : '') + s.head.map(q).join(',') + '\n' + s.rows.map(row => row.map(q).join(',')).join('\n') + '\n' + (s.foot ? s.foot.map(q).join(',') + '\n' : ''); });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = S.rpt + '_' + D().from + '_' + D().to + '.csv'; document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* =================== SETTINGS (Owner) =================== */
+function vSettings() {
+  const d = D(), LBL = { ACCOUNT: 'Bank / UPI / POS accounts (money comes in here)', INSURER: 'Insurance companies', ADV_PURPOSE: 'Advance purposes', ADVISOR: 'Service / Bodyshop advisors' };
+  let h = `<h2>Settings</h2><h4>Users &amp; PINs</h4><div class="tw"><table><thead><tr><th>ID</th><th>Name</th><th>Role</th><th>PIN</th><th>Active</th><th></th></tr></thead><tbody>${(d.users || []).map(u => `<tr><td>${esc(u.UserID)}</td><td>${esc(u.Name)}</td><td>${esc(u.Role)}</td><td>••••</td><td>${u.Active === 'N' ? '<span class="b g">NO</span>' : '<span class="b ok">YES</span>'}</td><td><button class="btn s" onclick="userForm('${u.UserID}')">Edit</button></td></tr>`).join('')}</tbody></table></div>
+  <div class="row" style="margin-top:8px"><button class="btn" onclick="userForm()">+ Add user</button></div>
+  <div class="note sm">Cashier: bills, receipts, advances, expenses, deposits, day close (today only). Advisor: enter bills and view dues. Accounts: everything + back-dated entries, write-offs, reversals, bill edit/cancel, bank &amp; Tally reconciliation, verify days. Owner: all + reopen verified days, users, lists, settings.</div>`;
+  h += '<h4>Rules &amp; opening balance</h4><div class="tw"><table><tbody>' + WA.DEFAULTS.settings.map(x => `<tr><td class="bold">${x[0]}</td><td><input id="st_${x[0]}" value="${esc(d.settings[x[0]])}" style="padding:6px;border:1px solid var(--line);border-radius:6px;width:220px"></td><td class="sm mut" style="white-space:normal">${esc(x[2])}</td><td><button class="btn s" onclick="M={ref:uid()};post('setting.save',{Key:'${x[0]}',Value:$('#st_${x[0]}').value},'Saved')">Save</button></td></tr>`).join('') + '</tbody></table></div>';
+  Object.keys(LBL).forEach(k => {
+    h += `<h4>${LBL[k]}</h4><div class="chips">${d.masters[k].map(v => `<span class="chip">${esc(v)} <a href="#" onclick="event.preventDefault();if(confirm('Remove from list? (old entries keep it)')){M={ref:uid()};post('master.save',{List:'${k}',Value:${esc(JSON.stringify(v))},Active:'N'},'Removed')}" style="color:var(--bad);text-decoration:none;margin-left:4px">×</a></span>`).join('')}</div>
+    <div class="row"><input id="m_${k}" placeholder="Add new…" style="padding:8px;border:1px solid var(--line);border-radius:8px;min-width:240px"><button class="btn s" onclick="const v=$('#m_${k}').value.trim();if(v){M={ref:uid()};post('master.save',{List:'${k}',Value:v},'Added')}">Add</button></div>`;
+  });
+  const em = d.masters.EXP_MAP || {}, gs = Object.keys(em), J = v => esc(JSON.stringify(v)), xs = 'color:var(--bad);text-decoration:none;margin-left:4px';
+  h += `<h4>Expense account groups &amp; ledgers <span class="mut" style="text-transform:none;letter-spacing:0">(keep names exactly as in Tally)</span></h4><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">${gs.map((g, i) => `<div class="card"><div class="row" style="justify-content:space-between"><b>${esc(g)}</b><a href="#" title="Remove group" style="${xs}" onclick="event.preventDefault();if(confirm('Remove group ${esc(g.replace(/'/g, ''))} and hide its ledgers from the expense form? Old entries are kept.')){M={ref:uid()};post('master.save',{List:'EXP_GROUP',Value:${J(g)},Active:'N'},'Group removed')}">Remove</a></div>
+    <div class="chips" style="margin:8px 0">${em[g].map(l => `<span class="chip">${esc(l)} <a href="#" style="${xs}" onclick="event.preventDefault();if(confirm('Remove ledger? (old entries keep it)')){M={ref:uid()};post('master.save',{List:'EXP_CAT',Value:${J(l)},Parent:${J(g)},Active:'N'},'Ledger removed')}">×</a></span>`).join('') || '<span class="mut sm">No ledgers yet</span>'}</div>
+    <div class="row"><input id="mg_${i}" placeholder="Add ledger…" style="padding:6px 8px;border:1px solid var(--line);border-radius:8px;flex:1;min-width:0"><button class="btn s" onclick="const v=$('#mg_${i}').value.trim();if(v){M={ref:uid()};post('master.save',{List:'EXP_CAT',Value:v,Parent:${J(g)}},'Ledger added')}">Add</button></div></div>`).join('')}</div>
+  <div class="row" style="margin-top:8px"><input id="m_EXP_GROUP" placeholder="New account group (e.g. Advertisement Expenses)…" style="padding:8px;border:1px solid var(--line);border-radius:8px;min-width:300px"><button class="btn s" onclick="const v=$('#m_EXP_GROUP').value.trim();if(v){M={ref:uid()};post('master.save',{List:'EXP_GROUP',Value:v},'Group added')}">Add group</button></div>`;
+  return h;
+}
+function userForm(id) {
+  const u = id ? D().users.find(x => x.UserID === id) : { Role: 'CASHIER', Active: 'Y' };
+  openModal(`<h3>${id ? 'Edit user' : 'Add user'}</h3><div class="fg">${fld('Name', inp('Name', u.Name), '', 1)}${fld('Role', `<select name="Role">${opt([['CASHIER', 'Cashier'], ['ADVISOR', 'Advisor'], ['ACCOUNTS', 'Accounts'], ['OWNER', 'Owner']], u.Role)}</select>`, '', 1)}
+  ${fld('PIN (4–6 digits)', inp('PIN', u.PIN, 'inputmode="numeric" maxlength="6"'), '', 1)}${fld('Active', `<select name="Active">${opt([['Y', 'Yes'], ['N', 'No (blocked)']], u.Active || 'Y')}</select>`)}</div>
+  ${errBox}<div class="foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn p save" onclick="post('user.save',Object.assign(formVals('#mbody'),{UserID:'${id || ''}'}),'User saved')">Save</button></div>`);
+}
+
+const VIEWS = { home: vHome, bills: vBills, advances: vAdvances, expenses: vExpenses, cash: vCash, recon: vRecon, reports: vReports, settings: vSettings };
+
+/* =================== DEMO DATA =================== */
+function seedDemo() {
+  DEMO_DB = MemDB(); seedMem(DEMO_DB);
+  const T = istToday(), dd = k => WA.addDays(T, -k), h = (a, p, pin) => { const r = WA.handle(DEMO_DB, DEMO_CTX, a, p, pin || '1111'); if (!r.ok) console.warn(a, r.error); return r.data || {}; };
+  h('setting.save', { Key: 'OPENING_DATE', Value: dd(4) }); h('setting.save', { Key: 'OPENING_CASH', Value: '18500' });
+  const B = (no, dt, type, cust, reg, amtv, ex) => h('bill.create', Object.assign({ BillNo: no, BillDate: dt, Type: type, Customer: cust, RegNo: reg, BillAmount: amtv, Mobile: '98' + String(Math.floor(10000000 + Math.random() * 89999999)), Advisor: type === 'BS' ? 'Sunil (BS)' : 'Rahul (SA)' }, ex || {})).BillID;
+  const R = (id, payer, lines, dt, rem) => h('receipt.create', { BillID: id, Payer: payer, lines, date: dt, Remarks: rem || '' });
+  const UPI = 'Workshop UPI QR (rename)', BK = 'Workshop Bank A/c (rename)', POS = 'Card POS Machine (rename)';
+  const a1 = h('advance.create', { Party: 'Vinod Yadav', Mobile: '9812001122', RegNo: 'HR34K7788', Purpose: 'Bodyshop advance (claim pending)', Amount: 10000, Mode: 'UPI', Account: UPI, RefNo: 'UPI4400112', date: dd(4) }).AdvID;
+  let b = B('GS/26-1041', dd(4), 'GR', 'Rajesh Kumar', 'HR34F2210', 6840); R(b, 'CUSTOMER', [{ Mode: 'CASH', Amount: 6840 }], dd(4));
+  b = B('GS/26-1042', dd(4), 'GR', 'Anita Sharma', 'HR34G9001', 12450); R(b, 'CUSTOMER', [{ Mode: 'CASH', Amount: 2450 }, { Mode: 'UPI', Amount: 10000, Account: UPI, RefNo: 'UPI4400187' }], dd(4));
+  h('payment.create', { ExpGroup: 'Staff Welfare Expenses', Category: 'Tea & Refreshment', Payee: 'Shyam Tea Stall', Narration: 'Being tea & snacks for staff and waiting customers', Amount: 420, Mode: 'CASH', HasBill: 'N', date: dd(4) });
+  b = B('BS/26-0311', dd(3), 'BS', 'Vinod Yadav', 'HR34K7788', 86500, { Scheme: 'SPLIT', CustShare: 11200, Insurer: 'ICICI Lombard', ClaimNo: 'MOT-26-778812' });
+  R(b, 'CUSTOMER', [{ Mode: 'ADV_ADJ', Amount: 10000, AdvanceID: a1 }, { Mode: 'CASH', Amount: 1200 }], dd(3));
+  b = B('GS/26-1043', dd(3), 'GR', 'Sandeep Rao', 'HR34A0091', 23900); R(b, 'CUSTOMER', [{ Mode: 'CARD', Amount: 23900, Account: POS, RefNo: 'APR883301' }], dd(3));
+  h('payment.create', { ExpGroup: 'Workshop Direct Expenses', Category: 'Outside Job / Sublet Work', Payee: 'Gupta Radiator Works', Narration: 'Being radiator repair of HR34A0091 (bill GS/26-1043) vide bill no 221', Amount: 1800, Mode: 'CASH', SupplierBillNo: '221', HasBill: 'Y', date: dd(3) });
+  b = B('BS/26-0312', dd(2), 'BS', 'Mukesh Saini', 'HR34B5512', 42300, { Scheme: 'INSURANCE', Insurer: 'New India Assurance', ClaimNo: 'NIA/26/55120' });
+  b = B('GS/26-1044', dd(2), 'GR', 'Mahendragarh Co-op Bank', 'HR34T0001', 15600); h('bill.credit', { BillID: b, CreditBy: 'Piyush Sanghi', CreditDue: WA.addDays(T, 10), CreditNote: 'Fleet – monthly payment' });
+  b = B('BS/26-0313', dd(2), 'BS', 'Kavita Devi', 'HR34D4410', 9850, { Scheme: 'CUSTOMER' }); R(b, 'CUSTOMER', [{ Mode: 'NEFT', Amount: 9850, Account: BK, RefNo: 'SBIN226001234' }], dd(2));
+  h('contra.create', { CType: 'CASH_TO_BANK', Amount: 25000, Account: BK, RefNo: 'SLIP-0091', date: dd(1) });
+  const old = B('BS/26-0290', dd(4), 'BS', 'Rakesh Jangid', 'HR34E3300', 64200, { Scheme: 'SPLIT', CustShare: 7800, Insurer: 'HDFC ERGO', ClaimNo: 'C-26-990121' });
+  R(old, 'CUSTOMER', [{ Mode: 'UPI', Amount: 7800, Account: UPI, RefNo: 'UPI4402219' }], dd(4));
+  R(old, 'INSURANCE', [{ Mode: 'NEFT', Amount: 55271, Account: BK, RefNo: 'HDFCN26110021' }, { Mode: 'TDS', Amount: 1129 }], dd(1));
+  h('advance.create', { Party: 'Deepak Chauhan', Mobile: '9813300221', RegNo: 'HR34M1200', Purpose: 'Parts order advance', Amount: 5000, Mode: 'CASH', date: dd(1) });
+  b = B('GS/26-1045', dd(1), 'GR', 'Pooja Gupta', 'HR34H6060', 4720); R(b, 'CUSTOMER', [{ Mode: 'UPI', Amount: 4720, Account: UPI, RefNo: 'UPI4402901' }], dd(1));
+  b = B('GS/26-1046', T, 'GR', 'Harish Yadav', 'HR34J1200', 8260); R(b, 'CUSTOMER', [{ Mode: 'CASH', Amount: 5000 }], T);
+  h('payment.create', { ExpGroup: 'Vehicle Running Expenses', Category: 'Fuel – Workshop Vehicles', Payee: 'Driver – Ramesh', Narration: 'Being diesel for pick-up & drop vehicle HR34P0011', Amount: 600, HasBill: 'Y', SupplierBillNo: 'HP-88231', Mode: 'CASH', date: T });
+  [4, 3, 2, 1].forEach(k => { const f = h('day.figures', { date: dd(k) }); const n = Math.floor(f.Expected / 500); h('day.close', { date: dd(k), denoms: { 500: n, coins: r2(f.Expected - n * 500) } }); if (k > 1) h('day.verify', { date: dd(k) }, '2222'); });
+}
+
+/* =================== INIT =================== */
+(async function init() {
+  if (DEMO) seedDemo();
+  const p = store.get('wa_pin');
+  if (p) {
+    S.pin = p; busy(true);
+    try { const r = await api('login', {}); S.me = r.me; S.from = DEMO ? WA.addDays(r.today, -4) : r.today.slice(0, 8) + '01'; S.to = r.today; await load(); return; }
+    catch (e) { store.set('wa_pin', ''); S.pin = ''; } finally { busy(false); }
+  }
+  render();
+})();
+</script>
+</body>
+</html>
